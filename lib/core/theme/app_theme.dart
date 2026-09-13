@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'app_colors.dart';
 import 'app_dimensions.dart';
+import 'app_text_styles.dart';
 
 abstract final class AppTheme {
   static ThemeData get light {
@@ -21,58 +22,24 @@ abstract final class AppTheme {
         onError: AppColors.surface,
       ),
     );
-    final body = GoogleFonts.interTextTheme(base.textTheme).apply(
-      bodyColor: AppColors.textPrimary,
-      displayColor: AppColors.textPrimary,
-    );
 
     return base.copyWith(
-      textTheme: body.copyWith(
-        displayLarge: GoogleFonts.fraunces(
-          color: AppColors.textPrimary,
-          fontSize: 40,
-          fontWeight: FontWeight.w600,
-          height: 1.1,
-        ),
-        displayMedium: GoogleFonts.fraunces(
-          color: AppColors.textPrimary,
-          fontSize: 32,
-          fontWeight: FontWeight.w600,
-          height: 1.15,
-        ),
-        headlineSmall: GoogleFonts.fraunces(
-          color: AppColors.textPrimary,
-          fontSize: 24,
-          fontWeight: FontWeight.w600,
-          height: 1.2,
-        ),
-        titleLarge: GoogleFonts.inter(
-          color: AppColors.textPrimary,
-          fontSize: 18,
-          fontWeight: FontWeight.w700,
-        ),
-        titleMedium: GoogleFonts.inter(
-          color: AppColors.textPrimary,
-          fontSize: 16,
-          fontWeight: FontWeight.w700,
-        ),
-        bodyLarge: GoogleFonts.inter(fontSize: 16, height: 1.5),
-        bodyMedium: GoogleFonts.inter(fontSize: 14, height: 1.45),
-        labelLarge: GoogleFonts.inter(
-          fontSize: 14,
-          fontWeight: FontWeight.w700,
-        ),
+      textTheme: base.textTheme.copyWith(
+        displayLarge: AppTextStyles.headingLarge,
+        displayMedium: AppTextStyles.headingMedium,
+        headlineSmall: AppTextStyles.headingSmall,
+        titleLarge: AppTextStyles.titleLarge,
+        titleMedium: AppTextStyles.titleMedium,
+        bodyLarge: AppTextStyles.bodyLarge,
+        bodyMedium: AppTextStyles.body,
+        labelLarge: AppTextStyles.label,
       ),
       appBarTheme: AppBarTheme(
         backgroundColor: AppColors.background,
         foregroundColor: AppColors.textPrimary,
         elevation: 0,
         centerTitle: false,
-        titleTextStyle: GoogleFonts.fraunces(
-          color: AppColors.textPrimary,
-          fontSize: 24,
-          fontWeight: FontWeight.w600,
-        ),
+        titleTextStyle: AppTextStyles.headingSmall,
       ),
       cardTheme: const CardThemeData(
         color: AppColors.surface,
@@ -111,37 +78,29 @@ abstract final class AppTheme {
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
+          minimumSize: const Size(0, AppDimensions.controlHeight),
           padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 12),
           backgroundColor: AppColors.primary,
           foregroundColor: AppColors.surface,
           elevation: 0,
           shape: const StadiumBorder(),
-          textStyle: GoogleFonts.inter(
-            fontSize: 14,
-            fontWeight: FontWeight.w700,
-          ),
+          textStyle: AppTextStyles.button,
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
+          minimumSize: const Size(0, AppDimensions.controlHeight),
           padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 12),
           foregroundColor: AppColors.primary,
           side: const BorderSide(color: AppColors.primary),
           shape: const StadiumBorder(),
-          textStyle: GoogleFonts.inter(
-            fontSize: 14,
-            fontWeight: FontWeight.w700,
-          ),
+          textStyle: AppTextStyles.button,
         ),
       ),
       chipTheme: ChipThemeData(
         backgroundColor: AppColors.neutral,
         selectedColor: AppColors.primarySurface,
-        labelStyle: GoogleFonts.inter(
-          color: AppColors.textSecondary,
-          fontSize: 12,
-          fontWeight: FontWeight.w700,
-        ),
+        labelStyle: AppTextStyles.label,
         shape: const StadiumBorder(),
         side: BorderSide.none,
       ),
