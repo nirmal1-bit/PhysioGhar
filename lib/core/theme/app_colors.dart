@@ -21,4 +21,5 @@ abstract final class AppColors {
   // Error and destructive-action colors.
   static const error = Color(0xFFC84B4B);
   static const errorSurface = Color(0xFFFCE8E8);
+  static const success = Color(0xFF4CAF50);
 }

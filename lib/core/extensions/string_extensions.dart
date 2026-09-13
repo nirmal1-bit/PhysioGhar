@@ -7,3 +7,9 @@ extension GoRoutes on String {
     return GoRoute(path: this, name: substring(1), builder: builder);
   }
 }
+
+extension StringValidation on String {
+  bool get isValidEmail {
+    return RegExp(r'^[^\s@]+@[^\s@]+\.[^\s@]+$').hasMatch(trim());
+  }
+}
