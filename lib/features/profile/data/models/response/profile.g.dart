@@ -12,7 +12,7 @@ _Profile _$ProfileFromJson(Map<String, dynamic> json) => _Profile(
   name: json['name'] as String,
   email: json['email'] as String,
   profileImageUrl: json['profile_image_url'] as String?,
-  phone: json['phone'] as String,
+  phone: json['phone'] as String?,
   experienceYears: (json['experience_years'] as num).toInt(),
   specialization: json['specialization'] as String,
   address: json['address'] as String,

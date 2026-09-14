@@ -12,6 +12,7 @@ import 'package:physioghar/core/theme/app_dimensions.dart';
 import 'package:physioghar/core/theme/app_text_styles.dart';
 import 'package:physioghar/features/profile/data/models/response/profile.dart';
 import 'package:physioghar/features/profile/presentation/providers/profile_providers.dart';
+import 'package:physioghar/features/profile/presentation/widgets/profile_details_widgets.dart';
 
 class ProfileDetailsScreen extends ConsumerWidget {
   const ProfileDetailsScreen({super.key});
@@ -34,7 +35,7 @@ class ProfileDetailsScreen extends ConsumerWidget {
           title: Text('My profile'),
           showLeading: true,
         ),
-        body: _ProfileError(
+        body: ProfileErrorState(
           message: error is AppError
               ? ProfileController.errorMessage(error)
               : 'Could not load your profile',
@@ -108,7 +109,6 @@ class _ProfileDetailsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final imageUrl = profile.profileImageUrl;
     return Scaffold(
       appBar: FilledAppBar(
         title: const Text('My profile'),
@@ -130,28 +130,23 @@ class _ProfileDetailsView extends StatelessWidget {
             AppDimensions.spacingXxl,
           ),
           children: [
-            _ProfileHero(profile: profile, imageUrl: imageUrl),
+            ProfileHero(profile: profile),
             const VerticalSpacing(AppDimensions.spacingXl),
             Text('Professional details', style: AppTextStyles.titleLarge),
             const VerticalSpacing(AppDimensions.spacingSm),
-            _DetailsCard(
+            ProfileDetailsCard(
               children: [
-                _DetailRow(
-                  icon: Icons.phone_outlined,
-                  label: 'Phone',
-                  value: profile.phone,
-                ),
-                _DetailRow(
+                ProfileDetailRow(
                   icon: Icons.work_outline_rounded,
                   label: 'Experience',
                   value: '${profile.experienceYears} years',
                 ),
-                _DetailRow(
+                ProfileDetailRow(
                   icon: Icons.medical_services_outlined,
                   label: 'Specialization',
                   value: profile.specialization,
                 ),
-                _DetailRow(
+                ProfileDetailRow(
                   icon: Icons.location_on_outlined,
                   label: 'Address',
                   value: profile.address,
@@ -165,115 +160,6 @@ class _ProfileDetailsView extends StatelessWidget {
               onPressed: () => context.push(AppRoutes.profileEdit),
               expanded: true,
             ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _ProfileHero extends StatelessWidget {
-  const _ProfileHero({required this.profile, required this.imageUrl});
-
-  final Profile profile;
-  final String? imageUrl;
-
-  @override
-  Widget build(BuildContext context) {
-    final hasImage = imageUrl != null && imageUrl!.isNotEmpty;
-    return Column(
-      children: [
-        CircleAvatar(
-          radius: 48,
-          backgroundColor: AppColors.primarySurface,
-          backgroundImage: hasImage ? NetworkImage(imageUrl!) : null,
-          child: hasImage
-              ? null
-              : const Icon(
-                  Icons.person_rounded,
-                  color: AppColors.primary,
-                  size: 48,
-                ),
-        ),
-        const VerticalSpacing(AppDimensions.spacingMd),
-        Text(profile.name, style: AppTextStyles.headingSmall),
-        const VerticalSpacing(AppDimensions.spacingXs),
-        Text(profile.email, style: AppTextStyles.bodySmall),
-      ],
-    );
-  }
-}
-
-class _DetailsCard extends StatelessWidget {
-  const _DetailsCard({required this.children});
-
-  final List<Widget> children;
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.zero,
-      clipBehavior: Clip.antiAlias,
-      child: Column(children: children),
-    );
-  }
-}
-
-class _DetailRow extends StatelessWidget {
-  const _DetailRow({
-    required this.icon,
-    required this.label,
-    required this.value,
-  });
-
-  final IconData icon;
-  final String label;
-  final String value;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(AppDimensions.spacingMd),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(icon, color: AppColors.primary, size: 20),
-          const HorizontalSpacing(AppDimensions.spacingMd),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(label, style: AppTextStyles.bodySmall),
-                const VerticalSpacing(AppDimensions.spacingXs),
-                Text(value, style: AppTextStyles.bodyLarge),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _ProfileError extends StatelessWidget {
-  const _ProfileError({required this.message, required this.onRetry});
-
-  final String message;
-  final VoidCallback onRetry;
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(AppDimensions.pagePadding),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(Icons.error_outline, color: AppColors.error, size: 40),
-            const VerticalSpacing(AppDimensions.spacingMd),
-            Text(message, textAlign: TextAlign.center),
-            const VerticalSpacing(AppDimensions.spacingLg),
-            AppPrimaryButton(label: 'Try again', onPressed: onRetry),
           ],
         ),
       ),

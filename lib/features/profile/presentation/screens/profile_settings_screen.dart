@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:physioghar/core/common/widgets/app_avatar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:physioghar/core/common/widgets/app_bar.dart';
@@ -221,17 +222,9 @@ class _AccountHeader extends StatelessWidget {
         ),
         child: Row(
           children: [
-            CircleAvatar(
+            AppAvatar(
               radius: 30,
-              backgroundColor: AppColors.surface,
-              backgroundImage: hasImage ? NetworkImage(imageUrl) : null,
-              child: hasImage
-                  ? null
-                  : const Icon(
-                      Icons.person_rounded,
-                      color: AppColors.primary,
-                      size: 30,
-                    ),
+              image: hasImage ? NetworkImage(imageUrl) : null,
             ),
             const HorizontalSpacing(AppDimensions.spacingMd),
             Expanded(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:physioghar/core/api/error/app_error.dart';
 import 'package:physioghar/core/common/widgets/app_primary_button.dart';
 import 'package:physioghar/core/common/widgets/app_spacing.dart';
 import 'package:physioghar/core/common/widgets/app_text_button.dart';
@@ -11,6 +12,7 @@ import 'package:physioghar/core/theme/app_dimensions.dart';
 import 'package:physioghar/features/auth/data/models/requests/login_request.dart';
 import 'package:physioghar/features/auth/presentation/providers/auth_providers.dart';
 import 'package:physioghar/features/auth/presentation/widgets/auth_page_layout.dart';
+import 'package:physioghar/features/profile/presentation/providers/profile_providers.dart';
 import 'package:physioghar/utils/app_utils.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
@@ -55,7 +57,17 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     }
 
     AppUtils.showSuccessSnackbar(context: context, message: 'Welcome back');
-    context.go(AppRoutes.main);
+    try {
+      final profile = await ref.read(profileControllerProvider.future);
+      if (!mounted) return;
+      context.go(profile == null ? AppRoutes.profileEdit : AppRoutes.main);
+    } on AppError catch (profileError) {
+      if (!mounted) return;
+      AppUtils.showErrorSnackbar(
+        context: context,
+        message: ProfileController.errorMessage(profileError),
+      );
+    }
   }
 
   @override

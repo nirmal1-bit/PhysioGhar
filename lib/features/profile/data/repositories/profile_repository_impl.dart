@@ -50,9 +50,6 @@ class ProfileRepositoryImpl extends BaseRemoteSource
 
   Future<FormData> _toFormData(ProfileRequest request) async {
     final fields = <String, dynamic>{
-      'name': request.name,
-      'email': request.email,
-      'phone': request.phone,
       'experience_years': request.experienceYears.toString(),
       'specialization': request.specialization,
       'address': request.address,

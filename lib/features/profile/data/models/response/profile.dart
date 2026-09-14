@@ -11,7 +11,7 @@ abstract class Profile with _$Profile {
     required String name,
     required String email,
     @JsonKey(name: 'profile_image_url') String? profileImageUrl,
-    required String phone,
+    String? phone,
     @JsonKey(name: 'experience_years') required int experienceYears,
     required String specialization,
     required String address,
