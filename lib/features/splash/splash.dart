@@ -24,14 +24,11 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     final sessionService = await ref.read(sessionServiceProvider.future);
 
     final hasSession = sessionService.hasSession;
-    final onBoarding = sessionService.hasOnboarding;
 
     if (!mounted) return;
 
     if (hasSession) {
       context.replace(AppRoutes.main);
-    } else if (!onBoarding) {
-      context.replace(AppRoutes.onboarding);
     } else {
       context.replace(AppRoutes.login);
     }

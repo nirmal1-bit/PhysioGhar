@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:physioghar/core/api/error/app_error.dart';
 import 'package:physioghar/core/common/widgets/app_bar.dart';
 import 'package:physioghar/core/common/widgets/app_primary_button.dart';
@@ -27,19 +30,18 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
-  final _imageController = TextEditingController();
   final _phoneController = TextEditingController();
   final _experienceController = TextEditingController();
   final _specializationController = TextEditingController();
   final _addressController = TextEditingController();
   bool _didPopulate = false;
   bool _isEditing = false;
+  XFile? _selectedImage;
 
   @override
   void dispose() {
     _nameController.dispose();
     _emailController.dispose();
-    _imageController.dispose();
     _phoneController.dispose();
     _experienceController.dispose();
     _specializationController.dispose();
@@ -53,7 +55,6 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     _isEditing = true;
     _nameController.text = profile.name;
     _emailController.text = profile.email;
-    _imageController.text = profile.profileImageUrl ?? '';
     _phoneController.text = profile.phone;
     _experienceController.text = profile.experienceYears.toString();
     _specializationController.text = profile.specialization;
@@ -69,13 +70,11 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
           ProfileRequest(
             name: _nameController.text.trim(),
             email: _emailController.text.trim(),
-            profileImageUrl: _imageController.text.trim().isEmpty
-                ? null
-                : _imageController.text.trim(),
             phone: _phoneController.text.trim(),
             experienceYears: int.parse(_experienceController.text.trim()),
             specialization: _specializationController.text.trim(),
             address: _addressController.text.trim(),
+            image: _selectedImage,
           ),
         );
     if (!mounted) return;
@@ -93,6 +92,17 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       message: 'Profile saved successfully',
     );
     if (mounted) context.go(AppRoutes.profileDetails);
+  }
+
+  Future<void> _pickImage() async {
+    final image = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 85,
+      maxWidth: 1200,
+    );
+    if (image != null && mounted) {
+      setState(() => _selectedImage = image);
+    }
   }
 
   @override
@@ -175,7 +185,11 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _ProfileHeader(profile: profile),
+                _ProfileImagePicker(
+                  profile: profile,
+                  selectedImage: _selectedImage,
+                  onTap: _pickImage,
+                ),
                 const VerticalSpacing(AppDimensions.spacingXl),
                 Text('Basic information', style: AppTextStyles.titleLarge),
                 const VerticalSpacing(AppDimensions.spacingMd),
@@ -205,13 +219,6 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 const VerticalSpacing(AppDimensions.spacingXl),
                 Text('Professional details', style: AppTextStyles.titleLarge),
                 const VerticalSpacing(AppDimensions.spacingMd),
-                AppTextField(
-                  controller: _imageController,
-                  label: 'Profile image URL (optional)',
-                  keyboardType: TextInputType.url,
-                  textInputAction: TextInputAction.next,
-                ),
-                const VerticalSpacing(AppDimensions.spacingLg),
                 AppTextField(
                   controller: _phoneController,
                   label: 'Phone',
@@ -270,46 +277,74 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   }
 }
 
-class _ProfileHeader extends StatelessWidget {
-  const _ProfileHeader({required this.profile});
+class _ProfileImagePicker extends StatelessWidget {
+  const _ProfileImagePicker({
+    required this.profile,
+    required this.selectedImage,
+    required this.onTap,
+  });
 
   final Profile? profile;
+  final XFile? selectedImage;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     final imageUrl = profile?.profileImageUrl;
-    return Row(
+    final hasNetworkImage = imageUrl != null && imageUrl.isNotEmpty;
+    return Column(
       children: [
-        CircleAvatar(
-          radius: 32,
-          backgroundColor: AppColors.primarySurface,
-          backgroundImage: imageUrl == null || imageUrl.isEmpty
-              ? null
-              : NetworkImage(imageUrl),
-          child: imageUrl == null || imageUrl.isEmpty
-              ? const Icon(
-                  Icons.person_rounded,
-                  color: AppColors.primary,
-                  size: 32,
-                )
-              : null,
-        ),
-        const HorizontalSpacing(AppDimensions.spacingMd),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+        InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(52),
+          child: Stack(
             children: [
-              Text(
-                profile?.name ?? 'Complete your profile',
-                style: AppTextStyles.titleLarge,
+              CircleAvatar(
+                radius: 52,
+                backgroundColor: AppColors.primarySurface,
+                backgroundImage: selectedImage != null
+                    ? FileImage(File(selectedImage!.path))
+                    : hasNetworkImage
+                    ? NetworkImage(imageUrl)
+                    : null,
+                child: selectedImage == null && !hasNetworkImage
+                    ? const Icon(
+                        Icons.person_rounded,
+                        color: AppColors.primary,
+                        size: 48,
+                      )
+                    : null,
               ),
-              const VerticalSpacing(AppDimensions.spacingXs),
-              Text(
-                profile?.email ?? 'Add your professional details below',
-                style: AppTextStyles.bodySmall,
+              Positioned(
+                right: 0,
+                bottom: 0,
+                child: DecoratedBox(
+                  decoration: const BoxDecoration(
+                    color: AppColors.primary,
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Padding(
+                    padding: EdgeInsets.all(AppDimensions.spacingSm),
+                    child: Icon(
+                      Icons.camera_alt_outlined,
+                      color: AppColors.surface,
+                      size: 18,
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
+        ),
+        const VerticalSpacing(AppDimensions.spacingMd),
+        Text(
+          profile == null ? 'Add profile photo' : 'Change profile photo',
+          style: AppTextStyles.titleMedium,
+        ),
+        const VerticalSpacing(AppDimensions.spacingXs),
+        Text(
+          'Choose an image from your device',
+          style: AppTextStyles.bodySmall,
         ),
       ],
     );

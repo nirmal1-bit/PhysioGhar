@@ -1,3 +1,5 @@
+import 'package:image_picker/image_picker.dart';
+
 class ProfileRequest {
   const ProfileRequest({
     required this.name,
@@ -7,6 +9,7 @@ class ProfileRequest {
     required this.experienceYears,
     required this.specialization,
     required this.address,
+    this.image,
   });
 
   final String name;
@@ -16,6 +19,7 @@ class ProfileRequest {
   final int experienceYears;
   final String specialization;
   final String address;
+  final XFile? image;
 
   Map<String, dynamic> toJson() {
     return {

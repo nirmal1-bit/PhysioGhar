@@ -11,7 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 final dioProvider = Provider<Dio>((ref) {
   final dio = Dio(
     BaseOptions(
-      baseUrl: 'http://10.235.75.138:8000/api/v1',
+      baseUrl: 'http://10.146.76.118:8000/api/v1',
       connectTimeout: const Duration(seconds: 15),
       receiveTimeout: const Duration(seconds: 15),
       headers: {'Content-Type': 'application/json'},
