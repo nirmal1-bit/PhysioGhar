@@ -2,12 +2,15 @@ import 'package:go_router/go_router.dart';
 import 'package:physioghar/core/router/app_routes.dart';
 import 'package:physioghar/features/auth/presentation/screens/login_screen.dart';
 import 'package:physioghar/features/auth/presentation/screens/register_screen.dart';
-import 'package:physioghar/features/home/home_screen.dart';
+import 'package:physioghar/features/dashboard/presentation/screens/dashboard_screen.dart';
+import 'package:physioghar/features/dashboard/presentation/screens/bookings_screen.dart';
+import 'package:physioghar/features/home/presentation/screens/home_screen.dart';
 import 'package:physioghar/features/profile/presentation/screens/profile_screen.dart';
 import 'package:physioghar/features/profile/presentation/screens/profile_details_screen.dart';
 import 'package:physioghar/features/profile/presentation/screens/complaint_screen.dart';
 import 'package:physioghar/features/profile/presentation/screens/profile_info_screen.dart';
 import 'package:physioghar/features/profile/presentation/screens/profile_settings_screen.dart';
+import 'package:physioghar/features/schedule/presentation/screens/schedule_screen.dart';
 import 'package:physioghar/features/splash/splash.dart';
 
 final appRouter = GoRouter(
@@ -45,7 +48,7 @@ final appRouter = GoRouter(
           routes: [
             GoRoute(
               path: AppRoutes.schedule,
-              builder: (context, state) => const ScheduleView(),
+              builder: (context, state) => const ScheduleScreen(),
             ),
           ],
         ),
@@ -53,7 +56,7 @@ final appRouter = GoRouter(
           routes: [
             GoRoute(
               path: AppRoutes.bookings,
-              builder: (context, state) => const BookingsView(),
+              builder: (context, state) => const BookingsScreen(),
             ),
           ],
         ),
