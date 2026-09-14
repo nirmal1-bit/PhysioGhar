@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:physioghar/core/api/error/app_error.dart';
-import 'package:physioghar/core/constants/storage_keys.dart';
 import 'package:physioghar/core/providers/core_providers.dart';
 import 'package:physioghar/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:physioghar/features/auth/data/models/requests/login_request.dart';
@@ -32,8 +31,8 @@ class AuthController extends AsyncNotifier<AuthToken?> {
         return error;
       },
       (token) async {
-        final preferences = await ref.read(sharedPreferencesProvider.future);
-        await preferences.setString(StorageKeys.token, token.accessToken);
+        final session = await ref.read(sessionServiceProvider.future);
+        await session.saveToken(token.accessToken);
         state = AsyncData(token);
         return null;
       },

@@ -1,13 +1,15 @@
-class AuthToken {
-  const AuthToken({required this.accessToken, required this.tokenType});
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  factory AuthToken.fromJson(Map<String, dynamic> json) {
-    return AuthToken(
-      accessToken: json['access_token'] as String,
-      tokenType: json['token_type'] as String,
-    );
-  }
+part 'auth_token.freezed.dart';
+part 'auth_token.g.dart';
 
-  final String accessToken;
-  final String tokenType;
+@freezed
+abstract class AuthToken with _$AuthToken {
+  const factory AuthToken({
+    @JsonKey(name: 'access_token') required String accessToken,
+    @JsonKey(name: 'token_type') required String tokenType,
+  }) = _AuthToken;
+
+  factory AuthToken.fromJson(Map<String, dynamic> json) =>
+      _$AuthTokenFromJson(json);
 }

@@ -12,7 +12,7 @@ class HomeScreen extends StatelessWidget {
 
   static const _tabs = [
     _NavigationTab(
-      label: 'Home',
+      label: 'Dashboard',
       icon: Icons.dashboard_outlined,
       activeIcon: Icons.dashboard_rounded,
     ),
@@ -139,17 +139,6 @@ class BookingsView extends StatelessWidget {
     title: 'Bookings',
     subtitle: 'Review your upcoming appointments.',
     icon: Icons.event_note_rounded,
-  );
-}
-
-class ProfileView extends StatelessWidget {
-  const ProfileView({super.key});
-
-  @override
-  Widget build(BuildContext context) => const _HomeTabContent(
-    title: 'Profile',
-    subtitle: 'Keep your therapist profile up to date.',
-    icon: Icons.person_rounded,
   );
 }
 
