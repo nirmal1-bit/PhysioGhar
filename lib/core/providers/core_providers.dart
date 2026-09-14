@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:physioghar/core/network/auth_interaceptor.dart';
 import 'package:physioghar/core/network/network_info.dart';
+import 'package:physioghar/core/session/session_service.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -48,4 +49,10 @@ final networkInfoProvider = Provider<NetworkInfo>((ref) {
 
 final sharedPreferencesProvider = FutureProvider<SharedPreferences>((ref) {
   return SharedPreferences.getInstance();
+});
+
+final sessionServiceProvider = FutureProvider<SessionService>((ref) async {
+  final prefs = await ref.watch(sharedPreferencesProvider.future);
+
+  return SessionService(prefs);
 });

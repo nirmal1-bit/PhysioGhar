@@ -6,6 +6,5 @@ import 'package:physioghar/features/auth/data/models/responses/therapist.dart';
 
 abstract interface class AuthRepository {
   EitherResponse<Therapist> register(RegisterRequest request);
-
   EitherResponse<AuthToken> login(LoginRequest request);
 }
