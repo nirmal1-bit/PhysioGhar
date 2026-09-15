@@ -9,7 +9,11 @@ import 'package:physioghar/core/theme/app_dimensions.dart';
 import 'package:physioghar/core/theme/app_text_styles.dart';
 import 'package:physioghar/features/schedule/data/models/schedule_slot.dart';
 import 'package:physioghar/features/schedule/presentation/providers/schedule_providers.dart';
-import 'package:physioghar/features/schedule/presentation/widgets/schedule_widgets.dart';
+import 'package:physioghar/features/schedule/presentation/widgets/schedule_availability_banner_widget.dart';
+import 'package:physioghar/features/schedule/presentation/widgets/schedule_day_selector_widget.dart';
+import 'package:physioghar/features/schedule/presentation/widgets/schedule_empty_state_widget.dart';
+import 'package:physioghar/features/schedule/presentation/widgets/schedule_legend_widget.dart';
+import 'package:physioghar/features/schedule/presentation/widgets/schedule_slot_tile_widget.dart';
 import 'package:physioghar/utils/app_utils.dart';
 
 class ScheduleScreen extends ConsumerWidget {
@@ -76,8 +80,8 @@ class _ScheduleContentState extends ConsumerState<_ScheduleContent> {
               const VerticalSpacing(AppDimensions.spacingSm),
               Text(
                 newStatus == 'blocked'
-                    ? 'This slot will no longer be available for booking.'
-                    : 'This slot will become available for booking again.',
+                    ? 'This weekly slot will be blocked on every occurrence of this weekday.'
+                    : 'This weekly slot will become available for booking again.',
                 style: AppTextStyles.body,
               ),
               const VerticalSpacing(AppDimensions.spacingLg),
@@ -96,7 +100,11 @@ class _ScheduleContentState extends ConsumerState<_ScheduleContent> {
     setState(() => _isActionLoading = true);
     final error = await ref
         .read(scheduleControllerProvider.notifier)
-        .changeSlotStatus(slotId: slot.id, status: newStatus);
+        .changeSlotStatus(
+          slotId: slot.id,
+          status: newStatus,
+          date: widget.data.selectedDate,
+        );
     if (!mounted) return;
     setState(() => _isActionLoading = false);
     _showError(error);
@@ -166,7 +174,7 @@ class _ScheduleContentState extends ConsumerState<_ScheduleContent> {
               style: AppTextStyles.body,
             ),
             const VerticalSpacing(AppDimensions.spacingLg),
-            ScheduleAvailabilityBanner(
+            ScheduleAvailabilityBannerWidget(
               isAvailable: widget.data.availability.isAvailable,
               isLoading: _isAvailabilityLoading,
               onChanged: _changeAvailability,
@@ -174,15 +182,20 @@ class _ScheduleContentState extends ConsumerState<_ScheduleContent> {
             const VerticalSpacing(AppDimensions.spacingXl),
             Text('This week', style: AppTextStyles.titleLarge),
             const VerticalSpacing(AppDimensions.spacingMd),
-            ScheduleDaySelector(
+            ScheduleDaySelectorWidget(
               weekStart: widget.data.schedule.weekStart,
               selectedDate: widget.data.selectedDate,
               onSelected: (date) => ref
                   .read(scheduleControllerProvider.notifier)
                   .selectDate(date),
             ),
+            const VerticalSpacing(AppDimensions.spacingXs),
+            Text(
+              'Slots repeat every week on the selected weekday.',
+              style: AppTextStyles.bodySmall,
+            ),
             const VerticalSpacing(AppDimensions.spacingMd),
-            const ScheduleLegend(),
+            const ScheduleLegendWidget(),
             const VerticalSpacing(AppDimensions.spacingLg),
             Row(
               children: [
@@ -201,14 +214,14 @@ class _ScheduleContentState extends ConsumerState<_ScheduleContent> {
             ),
             const VerticalSpacing(AppDimensions.spacingSm),
             if (selectedSlots.isEmpty)
-              const ScheduleEmptyState()
+              const ScheduleEmptyStateWidget()
             else
               ...selectedSlots.map(
                 (slot) => Padding(
                   padding: const EdgeInsets.only(
                     bottom: AppDimensions.spacingMd,
                   ),
-                  child: ScheduleSlotTile(
+                  child: ScheduleSlotTileWidget(
                     slot: slot,
                     onTap: () => _changeSlotStatus(slot),
                   ),

@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ScheduleSlot {
 
- int get id;@JsonKey(name: 'slot_date') DateTime get slotDate;@JsonKey(name: 'start_time') String get startTime;@JsonKey(name: 'end_time') String get endTime; String get status;@JsonKey(name: 'created_at') DateTime get createdAt;@JsonKey(name: 'updated_at') DateTime get updatedAt;
+ int get id;@JsonKey(name: 'slot_date') DateTime get slotDate;@JsonKey(name: 'day_of_week') int get dayOfWeek;@JsonKey(name: 'start_time') String get startTime;@JsonKey(name: 'end_time') String get endTime; String get status;@JsonKey(name: 'created_at') DateTime get createdAt;@JsonKey(name: 'updated_at') DateTime get updatedAt;
 /// Create a copy of ScheduleSlot
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $ScheduleSlotCopyWith<ScheduleSlot> get copyWith => _$ScheduleSlotCopyWithImpl<S
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ScheduleSlot&&(identical(other.id, id) || other.id == id)&&(identical(other.slotDate, slotDate) || other.slotDate == slotDate)&&(identical(other.startTime, startTime) || other.startTime == startTime)&&(identical(other.endTime, endTime) || other.endTime == endTime)&&(identical(other.status, status) || other.status == status)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ScheduleSlot&&(identical(other.id, id) || other.id == id)&&(identical(other.slotDate, slotDate) || other.slotDate == slotDate)&&(identical(other.dayOfWeek, dayOfWeek) || other.dayOfWeek == dayOfWeek)&&(identical(other.startTime, startTime) || other.startTime == startTime)&&(identical(other.endTime, endTime) || other.endTime == endTime)&&(identical(other.status, status) || other.status == status)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,slotDate,startTime,endTime,status,createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,id,slotDate,dayOfWeek,startTime,endTime,status,createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'ScheduleSlot(id: $id, slotDate: $slotDate, startTime: $startTime, endTime: $endTime, status: $status, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'ScheduleSlot(id: $id, slotDate: $slotDate, dayOfWeek: $dayOfWeek, startTime: $startTime, endTime: $endTime, status: $status, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $ScheduleSlotCopyWith<$Res>  {
   factory $ScheduleSlotCopyWith(ScheduleSlot value, $Res Function(ScheduleSlot) _then) = _$ScheduleSlotCopyWithImpl;
 @useResult
 $Res call({
- int id,@JsonKey(name: 'slot_date') DateTime slotDate,@JsonKey(name: 'start_time') String startTime,@JsonKey(name: 'end_time') String endTime, String status,@JsonKey(name: 'created_at') DateTime createdAt,@JsonKey(name: 'updated_at') DateTime updatedAt
+ int id,@JsonKey(name: 'slot_date') DateTime slotDate,@JsonKey(name: 'day_of_week') int dayOfWeek,@JsonKey(name: 'start_time') String startTime,@JsonKey(name: 'end_time') String endTime, String status,@JsonKey(name: 'created_at') DateTime createdAt,@JsonKey(name: 'updated_at') DateTime updatedAt
 });
 
 
@@ -65,11 +65,12 @@ class _$ScheduleSlotCopyWithImpl<$Res>
 
 /// Create a copy of ScheduleSlot
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? slotDate = null,Object? startTime = null,Object? endTime = null,Object? status = null,Object? createdAt = null,Object? updatedAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? slotDate = null,Object? dayOfWeek = null,Object? startTime = null,Object? endTime = null,Object? status = null,Object? createdAt = null,Object? updatedAt = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,slotDate: null == slotDate ? _self.slotDate : slotDate // ignore: cast_nullable_to_non_nullable
-as DateTime,startTime: null == startTime ? _self.startTime : startTime // ignore: cast_nullable_to_non_nullable
+as DateTime,dayOfWeek: null == dayOfWeek ? _self.dayOfWeek : dayOfWeek // ignore: cast_nullable_to_non_nullable
+as int,startTime: null == startTime ? _self.startTime : startTime // ignore: cast_nullable_to_non_nullable
 as String,endTime: null == endTime ? _self.endTime : endTime // ignore: cast_nullable_to_non_nullable
 as String,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
@@ -159,10 +160,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id, @JsonKey(name: 'slot_date')  DateTime slotDate, @JsonKey(name: 'start_time')  String startTime, @JsonKey(name: 'end_time')  String endTime,  String status, @JsonKey(name: 'created_at')  DateTime createdAt, @JsonKey(name: 'updated_at')  DateTime updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id, @JsonKey(name: 'slot_date')  DateTime slotDate, @JsonKey(name: 'day_of_week')  int dayOfWeek, @JsonKey(name: 'start_time')  String startTime, @JsonKey(name: 'end_time')  String endTime,  String status, @JsonKey(name: 'created_at')  DateTime createdAt, @JsonKey(name: 'updated_at')  DateTime updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ScheduleSlot() when $default != null:
-return $default(_that.id,_that.slotDate,_that.startTime,_that.endTime,_that.status,_that.createdAt,_that.updatedAt);case _:
+return $default(_that.id,_that.slotDate,_that.dayOfWeek,_that.startTime,_that.endTime,_that.status,_that.createdAt,_that.updatedAt);case _:
   return orElse();
 
 }
@@ -180,10 +181,10 @@ return $default(_that.id,_that.slotDate,_that.startTime,_that.endTime,_that.stat
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id, @JsonKey(name: 'slot_date')  DateTime slotDate, @JsonKey(name: 'start_time')  String startTime, @JsonKey(name: 'end_time')  String endTime,  String status, @JsonKey(name: 'created_at')  DateTime createdAt, @JsonKey(name: 'updated_at')  DateTime updatedAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id, @JsonKey(name: 'slot_date')  DateTime slotDate, @JsonKey(name: 'day_of_week')  int dayOfWeek, @JsonKey(name: 'start_time')  String startTime, @JsonKey(name: 'end_time')  String endTime,  String status, @JsonKey(name: 'created_at')  DateTime createdAt, @JsonKey(name: 'updated_at')  DateTime updatedAt)  $default,) {final _that = this;
 switch (_that) {
 case _ScheduleSlot():
-return $default(_that.id,_that.slotDate,_that.startTime,_that.endTime,_that.status,_that.createdAt,_that.updatedAt);case _:
+return $default(_that.id,_that.slotDate,_that.dayOfWeek,_that.startTime,_that.endTime,_that.status,_that.createdAt,_that.updatedAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -200,10 +201,10 @@ return $default(_that.id,_that.slotDate,_that.startTime,_that.endTime,_that.stat
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id, @JsonKey(name: 'slot_date')  DateTime slotDate, @JsonKey(name: 'start_time')  String startTime, @JsonKey(name: 'end_time')  String endTime,  String status, @JsonKey(name: 'created_at')  DateTime createdAt, @JsonKey(name: 'updated_at')  DateTime updatedAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id, @JsonKey(name: 'slot_date')  DateTime slotDate, @JsonKey(name: 'day_of_week')  int dayOfWeek, @JsonKey(name: 'start_time')  String startTime, @JsonKey(name: 'end_time')  String endTime,  String status, @JsonKey(name: 'created_at')  DateTime createdAt, @JsonKey(name: 'updated_at')  DateTime updatedAt)?  $default,) {final _that = this;
 switch (_that) {
 case _ScheduleSlot() when $default != null:
-return $default(_that.id,_that.slotDate,_that.startTime,_that.endTime,_that.status,_that.createdAt,_that.updatedAt);case _:
+return $default(_that.id,_that.slotDate,_that.dayOfWeek,_that.startTime,_that.endTime,_that.status,_that.createdAt,_that.updatedAt);case _:
   return null;
 
 }
@@ -215,11 +216,12 @@ return $default(_that.id,_that.slotDate,_that.startTime,_that.endTime,_that.stat
 @JsonSerializable()
 
 class _ScheduleSlot implements ScheduleSlot {
-  const _ScheduleSlot({required this.id, @JsonKey(name: 'slot_date') required this.slotDate, @JsonKey(name: 'start_time') required this.startTime, @JsonKey(name: 'end_time') required this.endTime, required this.status, @JsonKey(name: 'created_at') required this.createdAt, @JsonKey(name: 'updated_at') required this.updatedAt});
+  const _ScheduleSlot({required this.id, @JsonKey(name: 'slot_date') required this.slotDate, @JsonKey(name: 'day_of_week') required this.dayOfWeek, @JsonKey(name: 'start_time') required this.startTime, @JsonKey(name: 'end_time') required this.endTime, required this.status, @JsonKey(name: 'created_at') required this.createdAt, @JsonKey(name: 'updated_at') required this.updatedAt});
   factory _ScheduleSlot.fromJson(Map<String, dynamic> json) => _$ScheduleSlotFromJson(json);
 
 @override final  int id;
 @override@JsonKey(name: 'slot_date') final  DateTime slotDate;
+@override@JsonKey(name: 'day_of_week') final  int dayOfWeek;
 @override@JsonKey(name: 'start_time') final  String startTime;
 @override@JsonKey(name: 'end_time') final  String endTime;
 @override final  String status;
@@ -239,16 +241,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ScheduleSlot&&(identical(other.id, id) || other.id == id)&&(identical(other.slotDate, slotDate) || other.slotDate == slotDate)&&(identical(other.startTime, startTime) || other.startTime == startTime)&&(identical(other.endTime, endTime) || other.endTime == endTime)&&(identical(other.status, status) || other.status == status)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ScheduleSlot&&(identical(other.id, id) || other.id == id)&&(identical(other.slotDate, slotDate) || other.slotDate == slotDate)&&(identical(other.dayOfWeek, dayOfWeek) || other.dayOfWeek == dayOfWeek)&&(identical(other.startTime, startTime) || other.startTime == startTime)&&(identical(other.endTime, endTime) || other.endTime == endTime)&&(identical(other.status, status) || other.status == status)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,slotDate,startTime,endTime,status,createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,id,slotDate,dayOfWeek,startTime,endTime,status,createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'ScheduleSlot(id: $id, slotDate: $slotDate, startTime: $startTime, endTime: $endTime, status: $status, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'ScheduleSlot(id: $id, slotDate: $slotDate, dayOfWeek: $dayOfWeek, startTime: $startTime, endTime: $endTime, status: $status, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -259,7 +261,7 @@ abstract mixin class _$ScheduleSlotCopyWith<$Res> implements $ScheduleSlotCopyWi
   factory _$ScheduleSlotCopyWith(_ScheduleSlot value, $Res Function(_ScheduleSlot) _then) = __$ScheduleSlotCopyWithImpl;
 @override @useResult
 $Res call({
- int id,@JsonKey(name: 'slot_date') DateTime slotDate,@JsonKey(name: 'start_time') String startTime,@JsonKey(name: 'end_time') String endTime, String status,@JsonKey(name: 'created_at') DateTime createdAt,@JsonKey(name: 'updated_at') DateTime updatedAt
+ int id,@JsonKey(name: 'slot_date') DateTime slotDate,@JsonKey(name: 'day_of_week') int dayOfWeek,@JsonKey(name: 'start_time') String startTime,@JsonKey(name: 'end_time') String endTime, String status,@JsonKey(name: 'created_at') DateTime createdAt,@JsonKey(name: 'updated_at') DateTime updatedAt
 });
 
 
@@ -276,11 +278,12 @@ class __$ScheduleSlotCopyWithImpl<$Res>
 
 /// Create a copy of ScheduleSlot
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? slotDate = null,Object? startTime = null,Object? endTime = null,Object? status = null,Object? createdAt = null,Object? updatedAt = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? slotDate = null,Object? dayOfWeek = null,Object? startTime = null,Object? endTime = null,Object? status = null,Object? createdAt = null,Object? updatedAt = null,}) {
   return _then(_ScheduleSlot(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,slotDate: null == slotDate ? _self.slotDate : slotDate // ignore: cast_nullable_to_non_nullable
-as DateTime,startTime: null == startTime ? _self.startTime : startTime // ignore: cast_nullable_to_non_nullable
+as DateTime,dayOfWeek: null == dayOfWeek ? _self.dayOfWeek : dayOfWeek // ignore: cast_nullable_to_non_nullable
+as int,startTime: null == startTime ? _self.startTime : startTime // ignore: cast_nullable_to_non_nullable
 as String,endTime: null == endTime ? _self.endTime : endTime // ignore: cast_nullable_to_non_nullable
 as String,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable

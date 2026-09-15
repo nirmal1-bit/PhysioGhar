@@ -114,7 +114,11 @@ class ScheduleController extends AsyncNotifier<ScheduleData> {
   }) async {
     final result = await ref
         .read(scheduleRepositoryProvider)
-        .createSlot(date: date, startTime: startTime, endTime: endTime);
+        .createSlot(
+          dayOfWeek: date.weekday - 1,
+          startTime: startTime,
+          endTime: endTime,
+        );
     return result.fold((error) => error, (_) async {
       await _refreshSelectedDate();
       return null;
@@ -124,10 +128,11 @@ class ScheduleController extends AsyncNotifier<ScheduleData> {
   Future<AppError?> changeSlotStatus({
     required int slotId,
     required String status,
+    required DateTime date,
   }) async {
     final result = await ref
         .read(scheduleRepositoryProvider)
-        .updateSlotStatus(slotId: slotId, status: status);
+        .updateSlotStatus(slotId: slotId, status: status, date: date);
     return result.fold((error) => error, (_) async {
       await _refreshSelectedDate();
       return null;

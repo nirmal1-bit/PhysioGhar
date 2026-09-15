@@ -3,7 +3,7 @@ import 'package:physioghar/core/router/app_routes.dart';
 import 'package:physioghar/features/auth/presentation/screens/login_screen.dart';
 import 'package:physioghar/features/auth/presentation/screens/register_screen.dart';
 import 'package:physioghar/features/dashboard/presentation/screens/dashboard_screen.dart';
-import 'package:physioghar/features/dashboard/presentation/screens/bookings_screen.dart';
+import 'package:physioghar/features/booking/presentation/screens/bookings_screen.dart';
 import 'package:physioghar/features/home/presentation/screens/home_screen.dart';
 import 'package:physioghar/features/profile/presentation/screens/profile_screen.dart';
 import 'package:physioghar/features/profile/presentation/screens/profile_details_screen.dart';

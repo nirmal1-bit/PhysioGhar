@@ -1,8 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:physioghar/core/api/error/app_error.dart';
 import 'package:physioghar/core/providers/core_providers.dart';
+import 'package:physioghar/features/booking/presentation/providers/booking_providers.dart';
 import 'package:physioghar/features/dashboard/data/models/response/availability.dart';
-import 'package:physioghar/features/dashboard/data/models/response/booking.dart';
+import 'package:physioghar/features/booking/data/models/response/booking.dart';
 import 'package:physioghar/features/dashboard/data/repositories/dashboard_repository_impl.dart';
 import 'package:physioghar/features/dashboard/domain/repositories/dashboard_repository.dart';
 
@@ -29,7 +30,9 @@ class DashboardController extends AsyncNotifier<DashboardData> {
   @override
   Future<DashboardData> build() async {
     final repository = ref.read(dashboardRepositoryProvider);
-    final bookingsResult = await repository.getBookings();
+    final bookingsResult = await ref
+        .read(bookingRepositoryProvider)
+        .getBookings();
     final availabilityResult = await repository.getAvailability();
 
     return bookingsResult.fold(
@@ -56,59 +59,6 @@ class DashboardController extends AsyncNotifier<DashboardData> {
       }
       return null;
     });
-  }
-
-  Future<AppError?> updateBookingStatus({
-    required int bookingId,
-    required String status,
-  }) async {
-    final result = await ref
-        .read(dashboardRepositoryProvider)
-        .updateBookingStatus(bookingId: bookingId, status: status);
-    return result.fold((error) => error, (updated) {
-      _replaceBooking(updated);
-      return null;
-    });
-  }
-
-  Future<AppError?> rescheduleBooking({
-    required int bookingId,
-    required int slotId,
-  }) async {
-    final result = await ref
-        .read(dashboardRepositoryProvider)
-        .rescheduleBooking(bookingId: bookingId, slotId: slotId);
-    return result.fold((error) => error, (updated) {
-      _replaceBooking(updated);
-      return null;
-    });
-  }
-
-  Future<AppError?> updateBookingNotes({
-    required int bookingId,
-    required String notes,
-  }) async {
-    final result = await ref
-        .read(dashboardRepositoryProvider)
-        .updateBookingNotes(bookingId: bookingId, notes: notes);
-    return result.fold((error) => error, (updated) {
-      _replaceBooking(updated);
-      return null;
-    });
-  }
-
-  void _replaceBooking(Booking updated) {
-    final current = state.valueOrNull;
-    if (current == null) return;
-    state = AsyncData(
-      DashboardData(
-        bookings: [
-          for (final booking in current.bookings)
-            if (booking.id == updated.id) updated else booking,
-        ],
-        availability: current.availability,
-      ),
-    );
   }
 
   Future<void> reload() async {

@@ -5,9 +5,14 @@ import 'package:physioghar/core/common/widgets/app_loading_widget.dart';
 import 'package:physioghar/core/theme/app_colors.dart';
 import 'package:physioghar/core/theme/app_dimensions.dart';
 import 'package:physioghar/core/theme/app_text_styles.dart';
-import 'package:physioghar/features/dashboard/data/models/response/booking.dart';
+import 'package:physioghar/features/booking/data/models/response/booking.dart';
 import 'package:physioghar/features/dashboard/presentation/providers/dashboard_providers.dart';
-import 'package:physioghar/features/dashboard/presentation/widgets/dashboard_widgets.dart';
+import 'package:physioghar/features/dashboard/presentation/widgets/availability_card_widget.dart';
+import 'package:physioghar/features/dashboard/presentation/widgets/booking_tile_widget.dart';
+import 'package:physioghar/features/dashboard/presentation/widgets/dashboard_empty_state_widget.dart';
+import 'package:physioghar/features/dashboard/presentation/widgets/dashboard_header_widget.dart';
+import 'package:physioghar/features/dashboard/presentation/widgets/dashboard_section_header_widget.dart';
+import 'package:physioghar/features/dashboard/presentation/widgets/dashboard_summary_card_widget.dart';
 import 'package:physioghar/features/profile/data/models/response/profile.dart';
 import 'package:physioghar/features/profile/presentation/providers/profile_providers.dart';
 import 'package:physioghar/utils/app_utils.dart';
@@ -100,9 +105,12 @@ class _DashboardContentState extends ConsumerState<_DashboardContent> {
         AppDimensions.spacingXxl,
       ),
       children: [
-        DashboardHeader(profile: widget.profile, date: formatShortDate(today)),
+        DashboardHeaderWidget(
+          profile: widget.profile,
+          date: formatShortDate(today),
+        ),
         const SizedBox(height: AppDimensions.sectionGap),
-        AvailabilityCard(
+        AvailabilityCardWidget(
           isAvailable: widget.data.availability.isAvailable,
           isLoading: _isUpdatingAvailability,
           onChanged: _changeAvailability,
@@ -110,21 +118,21 @@ class _DashboardContentState extends ConsumerState<_DashboardContent> {
         const SizedBox(height: AppDimensions.sectionGap),
         Row(
           children: [
-            DashboardSummaryCard(
+            DashboardSummaryCardWidget(
               label: "Today's sessions",
               value: todayBookings.length,
               icon: Icons.event_available_outlined,
               color: AppColors.primary,
             ),
             const SizedBox(width: AppDimensions.gridGap),
-            DashboardSummaryCard(
+            DashboardSummaryCardWidget(
               label: 'Requests',
               value: pendingCount,
               icon: Icons.inbox_outlined,
               color: AppColors.accent,
             ),
             const SizedBox(width: AppDimensions.gridGap),
-            DashboardSummaryCard(
+            DashboardSummaryCardWidget(
               label: 'Completed',
               value: completedCount,
               icon: Icons.check_circle_outline,
@@ -133,25 +141,27 @@ class _DashboardContentState extends ConsumerState<_DashboardContent> {
           ],
         ),
         const SizedBox(height: AppDimensions.sectionGap),
-        const DashboardSectionHeader(title: "Today's schedule"),
+        const DashboardSectionHeaderWidget(title: "Today's schedule"),
         const SizedBox(height: AppDimensions.spacingMd),
         if (todayBookings.isEmpty)
-          const DashboardEmptyState(message: 'No sessions scheduled for today.')
+          const DashboardEmptyStateWidget(
+            message: 'No sessions scheduled for today.',
+          )
         else
           ...todayBookings.map(
             (booking) => Padding(
               padding: const EdgeInsets.only(bottom: AppDimensions.spacingMd),
-              child: BookingTile(
+              child: BookingTileWidget(
                 booking: booking,
                 onTap: () => _showBookingDetails(booking),
               ),
             ),
           ),
         const SizedBox(height: AppDimensions.spacingMd),
-        const DashboardSectionHeader(title: 'Upcoming sessions'),
+        const DashboardSectionHeaderWidget(title: 'Upcoming sessions'),
         const SizedBox(height: AppDimensions.spacingMd),
         if (upcoming.isEmpty)
-          const DashboardEmptyState(message: 'No upcoming sessions yet.')
+          const DashboardEmptyStateWidget(message: 'No upcoming sessions yet.')
         else
           ...upcoming
               .take(3)
@@ -160,7 +170,7 @@ class _DashboardContentState extends ConsumerState<_DashboardContent> {
                   padding: const EdgeInsets.only(
                     bottom: AppDimensions.spacingMd,
                   ),
-                  child: BookingTile(
+                  child: BookingTileWidget(
                     booking: booking,
                     onTap: () => _showBookingDetails(booking),
                   ),

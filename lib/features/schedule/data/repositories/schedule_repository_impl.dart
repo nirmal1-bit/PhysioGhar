@@ -54,7 +54,7 @@ class ScheduleRepositoryImpl extends BaseRemoteSource
 
   @override
   EitherResponse<ScheduleSlot> createSlot({
-    required DateTime date,
+    required int dayOfWeek,
     required String startTime,
     required String endTime,
   }) {
@@ -63,7 +63,7 @@ class ScheduleRepositoryImpl extends BaseRemoteSource
         final response = await dio.post(
           ApiEndpoints.scheduleSlots,
           data: {
-            'slot_date': _dateValue(date),
+            'day_of_week': dayOfWeek,
             'start_time': startTime,
             'end_time': endTime,
           },
@@ -78,11 +78,13 @@ class ScheduleRepositoryImpl extends BaseRemoteSource
   EitherResponse<ScheduleSlot> updateSlotStatus({
     required int slotId,
     required String status,
+    required DateTime date,
   }) {
     return networkRequest(
       request: (dio) async {
         final response = await dio.patch(
           '${ApiEndpoints.scheduleSlots}/$slotId',
+          queryParameters: {'date': _dateValue(date)},
           data: {'status': status},
           options: Options(contentType: Headers.jsonContentType),
         );

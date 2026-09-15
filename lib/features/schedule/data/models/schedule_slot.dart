@@ -8,6 +8,7 @@ abstract class ScheduleSlot with _$ScheduleSlot {
   const factory ScheduleSlot({
     required int id,
     @JsonKey(name: 'slot_date') required DateTime slotDate,
+    @JsonKey(name: 'day_of_week') required int dayOfWeek,
     @JsonKey(name: 'start_time') required String startTime,
     @JsonKey(name: 'end_time') required String endTime,
     required String status,

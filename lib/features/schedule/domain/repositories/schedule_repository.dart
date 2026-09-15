@@ -8,12 +8,13 @@ abstract interface class ScheduleRepository {
   EitherResponse<ScheduleAvailability> getAvailability();
   EitherResponse<ScheduleAvailability> updateAvailability(bool isAvailable);
   EitherResponse<ScheduleSlot> createSlot({
-    required DateTime date,
+    required int dayOfWeek,
     required String startTime,
     required String endTime,
   });
   EitherResponse<ScheduleSlot> updateSlotStatus({
     required int slotId,
     required String status,
+    required DateTime date,
   });
 }
