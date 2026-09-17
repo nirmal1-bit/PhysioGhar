@@ -2,6 +2,7 @@ class AppRoutes {
   static const String splash = '/splash';
   static const String login = '/login';
   static const String register = '/register';
+  static const String patientHome = '/patient-home';
   static const String main = '/main';
   static const String dashboard = '/main/dashboard';
   static const String schedule = '/main/schedule';

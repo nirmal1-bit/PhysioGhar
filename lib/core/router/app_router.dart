@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:physioghar/core/router/app_routes.dart';
 import 'package:physioghar/features/auth/presentation/screens/login_screen.dart';
 import 'package:physioghar/features/auth/presentation/screens/register_screen.dart';
+import 'package:physioghar/features/auth/presentation/screens/patient_home_screen.dart';
 import 'package:physioghar/features/dashboard/presentation/screens/dashboard_screen.dart';
 import 'package:physioghar/features/booking/presentation/screens/bookings_screen.dart';
 import 'package:physioghar/features/home/presentation/screens/home_screen.dart';
@@ -27,6 +28,10 @@ final appRouter = GoRouter(
     GoRoute(
       path: AppRoutes.register,
       builder: (context, state) => const RegisterScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.patientHome,
+      builder: (context, state) => const PatientHomeScreen(),
     ),
     GoRoute(
       path: AppRoutes.main,

@@ -33,6 +33,7 @@ class AuthController extends AsyncNotifier<AuthToken?> {
       (token) async {
         final session = await ref.read(sessionServiceProvider.future);
         await session.saveToken(token.accessToken);
+        await session.saveUserRole(token.userType);
         state = AsyncData(token);
         return null;
       },

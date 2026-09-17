@@ -57,6 +57,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     }
 
     AppUtils.showSuccessSnackbar(context: context, message: 'Welcome back');
+    final authToken = ref.read(authControllerProvider).valueOrNull;
+    if (authToken?.userType == 'patient') {
+      if (mounted) context.go(AppRoutes.patientHome);
+      return;
+    }
     try {
       final profile = await ref.read(profileControllerProvider.future);
       if (!mounted) return;
@@ -75,9 +80,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     final isLoading = ref.watch(authControllerProvider).isLoading;
 
     return AuthPageLayout(
-      eyebrow: 'PhysioGhar therapist',
+      eyebrow: 'PhysioGhar',
       title: 'Welcome back.',
-      subtitle: 'Sign in to manage your sessions and availability.',
+      subtitle: 'Sign in to continue to your account.',
       form: Form(
         key: _formKey,
         child: Column(

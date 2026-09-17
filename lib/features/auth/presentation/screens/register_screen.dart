@@ -29,6 +29,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   final _confirmPasswordController = TextEditingController();
   bool _obscurePassword = true;
   bool _obscureConfirmation = true;
+  String _userType = 'therapist';
 
   @override
   void dispose() {
@@ -51,6 +52,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
             username: _usernameController.text.trim(),
             email: _emailController.text.trim(),
             password: _passwordController.text,
+            userType: _userType,
           ),
         );
     if (!mounted) return;
@@ -77,7 +79,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     return AuthPageLayout(
       eyebrow: 'Join PhysioGhar',
       title: 'Create your account.',
-      subtitle: 'Set up your therapist account to get started.',
+      subtitle: 'Choose an account type to get started.',
       form: Form(
         key: _formKey,
         child: Column(
@@ -169,6 +171,23 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                 return null;
               },
               onFieldSubmitted: (_) => _register(),
+            ),
+            const VerticalSpacing(AppDimensions.spacingLg),
+            DropdownButtonFormField<String>(
+              initialValue: _userType,
+              decoration: const InputDecoration(labelText: 'Account type'),
+              items: const [
+                DropdownMenuItem(
+                  value: 'therapist',
+                  child: Text('Therapist'),
+                ),
+                DropdownMenuItem(value: 'patient', child: Text('Patient')),
+              ],
+              onChanged: isLoading
+                  ? null
+                  : (value) {
+                      if (value != null) setState(() => _userType = value);
+                    },
             ),
             const VerticalSpacing(AppDimensions.spacingXl),
             AppPrimaryButton(
