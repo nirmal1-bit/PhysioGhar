@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AuthToken {
 
-@JsonKey(name: 'access_token') String get accessToken;@JsonKey(name: 'token_type') String get tokenType;
+@JsonKey(name: 'access_token') String get accessToken;@JsonKey(name: 'token_type') String get tokenType;@JsonKey(name: 'user_type') String get userType;
 /// Create a copy of AuthToken
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $AuthTokenCopyWith<AuthToken> get copyWith => _$AuthTokenCopyWithImpl<AuthToken>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthToken&&(identical(other.accessToken, accessToken) || other.accessToken == accessToken)&&(identical(other.tokenType, tokenType) || other.tokenType == tokenType));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthToken&&(identical(other.accessToken, accessToken) || other.accessToken == accessToken)&&(identical(other.tokenType, tokenType) || other.tokenType == tokenType)&&(identical(other.userType, userType) || other.userType == userType));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,accessToken,tokenType);
+int get hashCode => Object.hash(runtimeType,accessToken,tokenType,userType);
 
 @override
 String toString() {
-  return 'AuthToken(accessToken: $accessToken, tokenType: $tokenType)';
+  return 'AuthToken(accessToken: $accessToken, tokenType: $tokenType, userType: $userType)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $AuthTokenCopyWith<$Res>  {
   factory $AuthTokenCopyWith(AuthToken value, $Res Function(AuthToken) _then) = _$AuthTokenCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(name: 'access_token') String accessToken,@JsonKey(name: 'token_type') String tokenType
+@JsonKey(name: 'access_token') String accessToken,@JsonKey(name: 'token_type') String tokenType,@JsonKey(name: 'user_type') String userType
 });
 
 
@@ -65,10 +65,11 @@ class _$AuthTokenCopyWithImpl<$Res>
 
 /// Create a copy of AuthToken
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? accessToken = null,Object? tokenType = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? accessToken = null,Object? tokenType = null,Object? userType = null,}) {
   return _then(_self.copyWith(
 accessToken: null == accessToken ? _self.accessToken : accessToken // ignore: cast_nullable_to_non_nullable
 as String,tokenType: null == tokenType ? _self.tokenType : tokenType // ignore: cast_nullable_to_non_nullable
+as String,userType: null == userType ? _self.userType : userType // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -154,10 +155,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'access_token')  String accessToken, @JsonKey(name: 'token_type')  String tokenType)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'access_token')  String accessToken, @JsonKey(name: 'token_type')  String tokenType, @JsonKey(name: 'user_type')  String userType)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AuthToken() when $default != null:
-return $default(_that.accessToken,_that.tokenType);case _:
+return $default(_that.accessToken,_that.tokenType,_that.userType);case _:
   return orElse();
 
 }
@@ -175,10 +176,10 @@ return $default(_that.accessToken,_that.tokenType);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'access_token')  String accessToken, @JsonKey(name: 'token_type')  String tokenType)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'access_token')  String accessToken, @JsonKey(name: 'token_type')  String tokenType, @JsonKey(name: 'user_type')  String userType)  $default,) {final _that = this;
 switch (_that) {
 case _AuthToken():
-return $default(_that.accessToken,_that.tokenType);case _:
+return $default(_that.accessToken,_that.tokenType,_that.userType);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -195,10 +196,10 @@ return $default(_that.accessToken,_that.tokenType);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'access_token')  String accessToken, @JsonKey(name: 'token_type')  String tokenType)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'access_token')  String accessToken, @JsonKey(name: 'token_type')  String tokenType, @JsonKey(name: 'user_type')  String userType)?  $default,) {final _that = this;
 switch (_that) {
 case _AuthToken() when $default != null:
-return $default(_that.accessToken,_that.tokenType);case _:
+return $default(_that.accessToken,_that.tokenType,_that.userType);case _:
   return null;
 
 }
@@ -210,11 +211,12 @@ return $default(_that.accessToken,_that.tokenType);case _:
 @JsonSerializable()
 
 class _AuthToken implements AuthToken {
-  const _AuthToken({@JsonKey(name: 'access_token') required this.accessToken, @JsonKey(name: 'token_type') required this.tokenType});
+  const _AuthToken({@JsonKey(name: 'access_token') required this.accessToken, @JsonKey(name: 'token_type') required this.tokenType, @JsonKey(name: 'user_type') required this.userType});
   factory _AuthToken.fromJson(Map<String, dynamic> json) => _$AuthTokenFromJson(json);
 
 @override@JsonKey(name: 'access_token') final  String accessToken;
 @override@JsonKey(name: 'token_type') final  String tokenType;
+@override@JsonKey(name: 'user_type') final  String userType;
 
 /// Create a copy of AuthToken
 /// with the given fields replaced by the non-null parameter values.
@@ -229,16 +231,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuthToken&&(identical(other.accessToken, accessToken) || other.accessToken == accessToken)&&(identical(other.tokenType, tokenType) || other.tokenType == tokenType));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuthToken&&(identical(other.accessToken, accessToken) || other.accessToken == accessToken)&&(identical(other.tokenType, tokenType) || other.tokenType == tokenType)&&(identical(other.userType, userType) || other.userType == userType));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,accessToken,tokenType);
+int get hashCode => Object.hash(runtimeType,accessToken,tokenType,userType);
 
 @override
 String toString() {
-  return 'AuthToken(accessToken: $accessToken, tokenType: $tokenType)';
+  return 'AuthToken(accessToken: $accessToken, tokenType: $tokenType, userType: $userType)';
 }
 
 
@@ -249,7 +251,7 @@ abstract mixin class _$AuthTokenCopyWith<$Res> implements $AuthTokenCopyWith<$Re
   factory _$AuthTokenCopyWith(_AuthToken value, $Res Function(_AuthToken) _then) = __$AuthTokenCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(name: 'access_token') String accessToken,@JsonKey(name: 'token_type') String tokenType
+@JsonKey(name: 'access_token') String accessToken,@JsonKey(name: 'token_type') String tokenType,@JsonKey(name: 'user_type') String userType
 });
 
 
@@ -266,10 +268,11 @@ class __$AuthTokenCopyWithImpl<$Res>
 
 /// Create a copy of AuthToken
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? accessToken = null,Object? tokenType = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? accessToken = null,Object? tokenType = null,Object? userType = null,}) {
   return _then(_AuthToken(
 accessToken: null == accessToken ? _self.accessToken : accessToken // ignore: cast_nullable_to_non_nullable
 as String,tokenType: null == tokenType ? _self.tokenType : tokenType // ignore: cast_nullable_to_non_nullable
+as String,userType: null == userType ? _self.userType : userType // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }

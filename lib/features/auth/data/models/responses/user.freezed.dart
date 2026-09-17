@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'therapist.dart';
+part of 'user.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -13,22 +13,22 @@ part of 'therapist.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-mixin _$Therapist {
+mixin _$User {
 
  int get id; String get email; String get name; String get username;@JsonKey(name: 'user_type') String get userType;@JsonKey(name: 'is_active') bool get isActive;@JsonKey(name: 'created_at') DateTime get createdAt;
-/// Create a copy of Therapist
+/// Create a copy of User
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$TherapistCopyWith<Therapist> get copyWith => _$TherapistCopyWithImpl<Therapist>(this as Therapist, _$identity);
+$UserCopyWith<User> get copyWith => _$UserCopyWithImpl<User>(this as User, _$identity);
 
-  /// Serializes this Therapist to a JSON map.
+  /// Serializes this User to a JSON map.
   Map<String, dynamic> toJson();
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Therapist&&(identical(other.id, id) || other.id == id)&&(identical(other.email, email) || other.email == email)&&(identical(other.name, name) || other.name == name)&&(identical(other.username, username) || other.username == username)&&(identical(other.userType, userType) || other.userType == userType)&&(identical(other.isActive, isActive) || other.isActive == isActive)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is User&&(identical(other.id, id) || other.id == id)&&(identical(other.email, email) || other.email == email)&&(identical(other.name, name) || other.name == name)&&(identical(other.username, username) || other.username == username)&&(identical(other.userType, userType) || other.userType == userType)&&(identical(other.isActive, isActive) || other.isActive == isActive)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -37,15 +37,15 @@ int get hashCode => Object.hash(runtimeType,id,email,name,username,userType,isAc
 
 @override
 String toString() {
-  return 'Therapist(id: $id, email: $email, name: $name, username: $username, userType: $userType, isActive: $isActive, createdAt: $createdAt)';
+  return 'User(id: $id, email: $email, name: $name, username: $username, userType: $userType, isActive: $isActive, createdAt: $createdAt)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $TherapistCopyWith<$Res>  {
-  factory $TherapistCopyWith(Therapist value, $Res Function(Therapist) _then) = _$TherapistCopyWithImpl;
+abstract mixin class $UserCopyWith<$Res>  {
+  factory $UserCopyWith(User value, $Res Function(User) _then) = _$UserCopyWithImpl;
 @useResult
 $Res call({
  int id, String email, String name, String username,@JsonKey(name: 'user_type') String userType,@JsonKey(name: 'is_active') bool isActive,@JsonKey(name: 'created_at') DateTime createdAt
@@ -56,14 +56,14 @@ $Res call({
 
 }
 /// @nodoc
-class _$TherapistCopyWithImpl<$Res>
-    implements $TherapistCopyWith<$Res> {
-  _$TherapistCopyWithImpl(this._self, this._then);
+class _$UserCopyWithImpl<$Res>
+    implements $UserCopyWith<$Res> {
+  _$UserCopyWithImpl(this._self, this._then);
 
-  final Therapist _self;
-  final $Res Function(Therapist) _then;
+  final User _self;
+  final $Res Function(User) _then;
 
-/// Create a copy of Therapist
+/// Create a copy of User
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? email = null,Object? name = null,Object? username = null,Object? userType = null,Object? isActive = null,Object? createdAt = null,}) {
   return _then(_self.copyWith(
@@ -81,8 +81,8 @@ as DateTime,
 }
 
 
-/// Adds pattern-matching-related methods to [Therapist].
-extension TherapistPatterns on Therapist {
+/// Adds pattern-matching-related methods to [User].
+extension UserPatterns on User {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -95,10 +95,10 @@ extension TherapistPatterns on Therapist {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _Therapist value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _User value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _Therapist() when $default != null:
+case _User() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -117,10 +117,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _Therapist value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _User value)  $default,){
 final _that = this;
 switch (_that) {
-case _Therapist():
+case _User():
 return $default(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -138,10 +138,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _Therapist value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _User value)?  $default,){
 final _that = this;
 switch (_that) {
-case _Therapist() when $default != null:
+case _User() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -161,7 +161,7 @@ return $default(_that);case _:
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String email,  String name,  String username, @JsonKey(name: 'user_type')  String userType, @JsonKey(name: 'is_active')  bool isActive, @JsonKey(name: 'created_at')  DateTime createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _Therapist() when $default != null:
+case _User() when $default != null:
 return $default(_that.id,_that.email,_that.name,_that.username,_that.userType,_that.isActive,_that.createdAt);case _:
   return orElse();
 
@@ -182,7 +182,7 @@ return $default(_that.id,_that.email,_that.name,_that.username,_that.userType,_t
 
 @optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String email,  String name,  String username, @JsonKey(name: 'user_type')  String userType, @JsonKey(name: 'is_active')  bool isActive, @JsonKey(name: 'created_at')  DateTime createdAt)  $default,) {final _that = this;
 switch (_that) {
-case _Therapist():
+case _User():
 return $default(_that.id,_that.email,_that.name,_that.username,_that.userType,_that.isActive,_that.createdAt);case _:
   throw StateError('Unexpected subclass');
 
@@ -202,7 +202,7 @@ return $default(_that.id,_that.email,_that.name,_that.username,_that.userType,_t
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String email,  String name,  String username, @JsonKey(name: 'user_type')  String userType, @JsonKey(name: 'is_active')  bool isActive, @JsonKey(name: 'created_at')  DateTime createdAt)?  $default,) {final _that = this;
 switch (_that) {
-case _Therapist() when $default != null:
+case _User() when $default != null:
 return $default(_that.id,_that.email,_that.name,_that.username,_that.userType,_that.isActive,_that.createdAt);case _:
   return null;
 
@@ -214,9 +214,9 @@ return $default(_that.id,_that.email,_that.name,_that.username,_that.userType,_t
 /// @nodoc
 @JsonSerializable()
 
-class _Therapist implements Therapist {
-  const _Therapist({required this.id, required this.email, required this.name, required this.username, @JsonKey(name: 'user_type') required this.userType, @JsonKey(name: 'is_active') required this.isActive, @JsonKey(name: 'created_at') required this.createdAt});
-  factory _Therapist.fromJson(Map<String, dynamic> json) => _$TherapistFromJson(json);
+class _User implements User {
+  const _User({required this.id, required this.email, required this.name, required this.username, @JsonKey(name: 'user_type') required this.userType, @JsonKey(name: 'is_active') required this.isActive, @JsonKey(name: 'created_at') required this.createdAt});
+  factory _User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
 @override final  int id;
 @override final  String email;
@@ -226,20 +226,20 @@ class _Therapist implements Therapist {
 @override@JsonKey(name: 'is_active') final  bool isActive;
 @override@JsonKey(name: 'created_at') final  DateTime createdAt;
 
-/// Create a copy of Therapist
+/// Create a copy of User
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$TherapistCopyWith<_Therapist> get copyWith => __$TherapistCopyWithImpl<_Therapist>(this, _$identity);
+_$UserCopyWith<_User> get copyWith => __$UserCopyWithImpl<_User>(this, _$identity);
 
 @override
 Map<String, dynamic> toJson() {
-  return _$TherapistToJson(this, );
+  return _$UserToJson(this, );
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Therapist&&(identical(other.id, id) || other.id == id)&&(identical(other.email, email) || other.email == email)&&(identical(other.name, name) || other.name == name)&&(identical(other.username, username) || other.username == username)&&(identical(other.userType, userType) || other.userType == userType)&&(identical(other.isActive, isActive) || other.isActive == isActive)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _User&&(identical(other.id, id) || other.id == id)&&(identical(other.email, email) || other.email == email)&&(identical(other.name, name) || other.name == name)&&(identical(other.username, username) || other.username == username)&&(identical(other.userType, userType) || other.userType == userType)&&(identical(other.isActive, isActive) || other.isActive == isActive)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -248,15 +248,15 @@ int get hashCode => Object.hash(runtimeType,id,email,name,username,userType,isAc
 
 @override
 String toString() {
-  return 'Therapist(id: $id, email: $email, name: $name, username: $username, userType: $userType, isActive: $isActive, createdAt: $createdAt)';
+  return 'User(id: $id, email: $email, name: $name, username: $username, userType: $userType, isActive: $isActive, createdAt: $createdAt)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$TherapistCopyWith<$Res> implements $TherapistCopyWith<$Res> {
-  factory _$TherapistCopyWith(_Therapist value, $Res Function(_Therapist) _then) = __$TherapistCopyWithImpl;
+abstract mixin class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
+  factory _$UserCopyWith(_User value, $Res Function(_User) _then) = __$UserCopyWithImpl;
 @override @useResult
 $Res call({
  int id, String email, String name, String username,@JsonKey(name: 'user_type') String userType,@JsonKey(name: 'is_active') bool isActive,@JsonKey(name: 'created_at') DateTime createdAt
@@ -267,17 +267,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$TherapistCopyWithImpl<$Res>
-    implements _$TherapistCopyWith<$Res> {
-  __$TherapistCopyWithImpl(this._self, this._then);
+class __$UserCopyWithImpl<$Res>
+    implements _$UserCopyWith<$Res> {
+  __$UserCopyWithImpl(this._self, this._then);
 
-  final _Therapist _self;
-  final $Res Function(_Therapist) _then;
+  final _User _self;
+  final $Res Function(_User) _then;
 
-/// Create a copy of Therapist
+/// Create a copy of User
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? email = null,Object? name = null,Object? username = null,Object? userType = null,Object? isActive = null,Object? createdAt = null,}) {
-  return _then(_Therapist(
+  return _then(_User(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable

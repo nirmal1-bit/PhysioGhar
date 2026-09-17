@@ -1,11 +1,11 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'therapist.freezed.dart';
-part 'therapist.g.dart';
+part 'user.freezed.dart';
+part 'user.g.dart';
 
 @freezed
-abstract class Therapist with _$Therapist {
-  const factory Therapist({
+abstract class User with _$User {
+  const factory User({
     required int id,
     required String email,
     required String name,
@@ -13,8 +13,7 @@ abstract class Therapist with _$Therapist {
     @JsonKey(name: 'user_type') required String userType,
     @JsonKey(name: 'is_active') required bool isActive,
     @JsonKey(name: 'created_at') required DateTime createdAt,
-  }) = _Therapist;
+  }) = _User;
 
-  factory Therapist.fromJson(Map<String, dynamic> json) =>
-      _$TherapistFromJson(json);
+  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 }

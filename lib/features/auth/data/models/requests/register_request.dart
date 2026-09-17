@@ -10,6 +10,7 @@ abstract class RegisterRequest with _$RegisterRequest {
     required String name,
     required String username,
     required String password,
+    @JsonKey(name: 'user_type') @Default('therapist') String userType,
   }) = _RegisterRequest;
 
   factory RegisterRequest.fromJson(Map<String, dynamic> json) =>
