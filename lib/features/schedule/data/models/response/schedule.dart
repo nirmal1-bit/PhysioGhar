@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:physioghar/features/schedule/data/models/schedule_slot.dart';
+import 'package:physioghar/features/schedule/data/models/response/schedule_slot.dart';
 
 part 'schedule.freezed.dart';
 part 'schedule.g.dart';

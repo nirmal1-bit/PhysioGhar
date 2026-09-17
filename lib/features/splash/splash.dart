@@ -28,7 +28,10 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     if (!mounted) return;
 
     if (hasSession) {
-      context.replace(AppRoutes.main);
+      final destination = sessionService.userRole == 'patient'
+          ? AppRoutes.patientHome
+          : AppRoutes.main;
+      context.replace(destination);
     } else {
       context.replace(AppRoutes.login);
     }

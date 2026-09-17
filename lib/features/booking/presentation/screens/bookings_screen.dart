@@ -175,35 +175,11 @@ class _BookingsContentState extends ConsumerState<_BookingsContent> {
 
   Future<void> _editNotes(Booking booking, BuildContext sheetContext) async {
     Navigator.of(sheetContext).pop();
-    final controller = TextEditingController(
-      text: booking.therapistNotes ?? '',
-    );
     final notes = await showDialog<String>(
       context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: const Text('Therapist notes'),
-        content: TextField(
-          controller: controller,
-          maxLines: 6,
-          maxLength: 5000,
-          decoration: const InputDecoration(
-            hintText: 'Add remarks about this patient or session',
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(dialogContext),
-            child: const Text('Cancel'),
-          ),
-          FilledButton(
-            onPressed: () =>
-                Navigator.pop(dialogContext, controller.text.trim()),
-            child: const Text('Save notes'),
-          ),
-        ],
-      ),
+      builder: (_) =>
+          _BookingNotesDialog(initialNotes: booking.therapistNotes ?? ''),
     );
-    controller.dispose();
     if (notes == null || !mounted) return;
     setState(() => _isLoading = true);
     final error = await ref
@@ -306,4 +282,54 @@ class _BookingsContentState extends ConsumerState<_BookingsContent> {
       first.year == second.year &&
       first.month == second.month &&
       first.day == second.day;
+}
+
+class _BookingNotesDialog extends StatefulWidget {
+  const _BookingNotesDialog({required this.initialNotes});
+
+  final String initialNotes;
+
+  @override
+  State<_BookingNotesDialog> createState() => _BookingNotesDialogState();
+}
+
+class _BookingNotesDialogState extends State<_BookingNotesDialog> {
+  late final TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(text: widget.initialNotes);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('Therapist notes'),
+      content: TextField(
+        controller: _controller,
+        maxLines: 6,
+        maxLength: 5000,
+        decoration: const InputDecoration(
+          hintText: 'Add remarks about this patient or session',
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: const Text('Cancel'),
+        ),
+        FilledButton(
+          onPressed: () => Navigator.pop(context, _controller.text.trim()),
+          child: const Text('Save notes'),
+        ),
+      ],
+    );
+  }
 }

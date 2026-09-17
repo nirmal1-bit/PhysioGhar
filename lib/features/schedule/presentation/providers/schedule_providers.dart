@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:physioghar/core/api/error/app_error.dart';
 import 'package:physioghar/core/providers/core_providers.dart';
-import 'package:physioghar/features/schedule/data/models/availability.dart';
-import 'package:physioghar/features/schedule/data/models/schedule.dart';
-import 'package:physioghar/features/schedule/data/models/schedule_slot.dart';
+import 'package:physioghar/features/schedule/data/models/response/availability.dart';
+import 'package:physioghar/features/schedule/data/models/response/schedule.dart';
+import 'package:physioghar/features/schedule/data/models/response/schedule_slot.dart';
 import 'package:physioghar/features/schedule/data/repositories/schedule_repository_impl.dart';
 import 'package:physioghar/features/schedule/domain/repositories/schedule_repository.dart';
 

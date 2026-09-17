@@ -19,4 +19,5 @@ abstract final class ApiEndpoints {
   static String availableTherapistSlots(int therapistId) =>
       '/bookings/therapists/$therapistId/available-slots';
   static const createBooking = '/bookings';
+  static const complaints = '/complaints';
 }

@@ -139,124 +139,160 @@ class _PatientDetailsContent extends ConsumerWidget {
     PatientNote? note,
     required List<PatientSession> sessions,
   }) async {
-    final noteController = TextEditingController(text: note?.note);
-    final exercisesController = TextEditingController(text: note?.exercises);
-    final nextSessionController = TextEditingController(
-      text: note?.nextSession,
-    );
-    final formKey = GlobalKey<FormState>();
-    var isSaving = false;
-    var selectedBookingId = note?.bookingId ?? sessions.first.bookingId;
-
-    await showDialog<void>(
+    await showDialog<bool>(
       context: context,
-      builder: (dialogContext) => StatefulBuilder(
-        builder: (context, setState) => AlertDialog(
-          title: Text(note == null ? 'Add session note' : 'Edit session note'),
-          content: SingleChildScrollView(
-            child: Form(
-              key: formKey,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  AppTextField(
-                    controller: noteController,
-                    label: 'Session note',
-                    hint: 'What did the patient report?',
-                    textCapitalization: TextCapitalization.sentences,
-                    maxLines: 5,
-                    maxLength: 10000,
-                    validator: (value) => value == null || value.trim().isEmpty
-                        ? 'Add a session note'
-                        : null,
-                  ),
-                  const SizedBox(height: AppDimensions.spacingMd),
-                  DropdownButtonFormField<int>(
-                    initialValue: selectedBookingId,
-                    decoration: const InputDecoration(labelText: 'Session'),
-                    items: sessions
-                        .map(
-                          (session) => DropdownMenuItem<int>(
-                            value: session.bookingId,
-                            child: Text(
-                              '${formatShortDate(session.slotDate)} · ${session.treatment}',
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                        )
-                        .toList(),
-                    onChanged: note == null
-                        ? (value) {
-                            if (value != null) {
-                              setState(() => selectedBookingId = value);
-                            }
-                          }
-                        : null,
-                    validator: (value) =>
-                        value == null ? 'Select a session' : null,
-                  ),
-                  const SizedBox(height: AppDimensions.spacingMd),
-                  AppTextField(
-                    controller: exercisesController,
-                    label: 'Exercises',
-                    hint: 'Exercises or recommendations',
-                    textCapitalization: TextCapitalization.sentences,
-                  ),
-                  const SizedBox(height: AppDimensions.spacingMd),
-                  AppTextField(
-                    controller: nextSessionController,
-                    label: 'Next session',
-                    hint: 'Plan for the next session',
-                    textCapitalization: TextCapitalization.sentences,
-                  ),
-                ],
-              ),
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: isSaving ? null : () => Navigator.pop(dialogContext),
-              child: const Text('Cancel'),
-            ),
-            AppPrimaryButton(
-              label: 'Save',
-              isLoading: isSaving,
-              onPressed: () async {
-                if (!formKey.currentState!.validate()) return;
-                setState(() => isSaving = true);
-                final error = await ref
-                    .read(patientNotesProvider.notifier)
-                    .saveNote(
-                      patientId: patient.id,
-                      noteId: note?.id,
-                      note: noteController.text,
-                      exercises: exercisesController.text,
-                      nextSession: nextSessionController.text,
-                      bookingId: selectedBookingId,
-                    );
-                if (!context.mounted) return;
-                if (error != null) {
-                  setState(() => isSaving = false);
-                  AppUtils.showErrorSnackbar(
-                    context: context,
-                    message: PatientNotesController.errorMessage(error),
-                  );
-                  return;
-                }
-                Navigator.pop(dialogContext);
-                AppUtils.showSuccessSnackbar(
-                  context: context,
-                  message: note == null ? 'Note added' : 'Note updated',
-                );
-              },
-            ),
-          ],
-        ),
+      builder: (_) => _PatientNoteFormDialog(
+        patient: patient,
+        note: note,
+        sessions: sessions,
       ),
     );
-    noteController.dispose();
-    exercisesController.dispose();
-    nextSessionController.dispose();
+  }
+}
+
+class _PatientNoteFormDialog extends ConsumerStatefulWidget {
+  const _PatientNoteFormDialog({
+    required this.patient,
+    required this.sessions,
+    this.note,
+  });
+
+  final Patient patient;
+  final PatientNote? note;
+  final List<PatientSession> sessions;
+
+  @override
+  ConsumerState<_PatientNoteFormDialog> createState() =>
+      _PatientNoteFormDialogState();
+}
+
+class _PatientNoteFormDialogState
+    extends ConsumerState<_PatientNoteFormDialog> {
+  late final TextEditingController _noteController;
+  late final TextEditingController _exercisesController;
+  late final TextEditingController _nextSessionController;
+  final _formKey = GlobalKey<FormState>();
+  late int _selectedBookingId;
+  var _isSaving = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _noteController = TextEditingController(text: widget.note?.note);
+    _exercisesController = TextEditingController(text: widget.note?.exercises);
+    _nextSessionController = TextEditingController(
+      text: widget.note?.nextSession,
+    );
+    _selectedBookingId =
+        widget.note?.bookingId ?? widget.sessions.first.bookingId;
+  }
+
+  @override
+  void dispose() {
+    _noteController.dispose();
+    _exercisesController.dispose();
+    _nextSessionController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text(
+        widget.note == null ? 'Add session note' : 'Edit session note',
+      ),
+      content: SingleChildScrollView(
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              AppTextField(
+                controller: _noteController,
+                label: 'Session note',
+                hint: 'What did the patient report?',
+                textCapitalization: TextCapitalization.sentences,
+                maxLines: 5,
+                maxLength: 10000,
+                validator: (value) => value == null || value.trim().isEmpty
+                    ? 'Add a session note'
+                    : null,
+              ),
+              const SizedBox(height: AppDimensions.spacingMd),
+              DropdownButtonFormField<int>(
+                initialValue: _selectedBookingId,
+                decoration: const InputDecoration(labelText: 'Session'),
+                items: widget.sessions
+                    .map(
+                      (session) => DropdownMenuItem<int>(
+                        value: session.bookingId,
+                        child: Text(
+                          '${formatShortDate(session.slotDate)} · ${session.treatment}',
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    )
+                    .toList(),
+                onChanged: widget.note == null
+                    ? (value) {
+                        if (value != null) {
+                          setState(() => _selectedBookingId = value);
+                        }
+                      }
+                    : null,
+                validator: (value) => value == null ? 'Select a session' : null,
+              ),
+              const SizedBox(height: AppDimensions.spacingMd),
+              AppTextField(
+                controller: _exercisesController,
+                label: 'Exercises',
+                hint: 'Exercises or recommendations',
+                textCapitalization: TextCapitalization.sentences,
+              ),
+              const SizedBox(height: AppDimensions.spacingMd),
+              AppTextField(
+                controller: _nextSessionController,
+                label: 'Next session',
+                hint: 'Plan for the next session',
+                textCapitalization: TextCapitalization.sentences,
+              ),
+            ],
+          ),
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: _isSaving ? null : () => Navigator.pop(context),
+          child: const Text('Cancel'),
+        ),
+        AppPrimaryButton(label: 'Save', isLoading: _isSaving, onPressed: _save),
+      ],
+    );
+  }
+
+  Future<void> _save() async {
+    if (!_formKey.currentState!.validate()) return;
+    setState(() => _isSaving = true);
+    final error = await ref
+        .read(patientNotesProvider.notifier)
+        .saveNote(
+          patientId: widget.patient.id,
+          noteId: widget.note?.id,
+          note: _noteController.text,
+          exercises: _exercisesController.text,
+          nextSession: _nextSessionController.text,
+          bookingId: _selectedBookingId,
+        );
+    if (!mounted) return;
+    if (error != null) {
+      setState(() => _isSaving = false);
+      AppUtils.showErrorSnackbar(
+        context: context,
+        message: PatientNotesController.errorMessage(error),
+      );
+      return;
+    }
+    Navigator.pop(context, true);
   }
 }
 

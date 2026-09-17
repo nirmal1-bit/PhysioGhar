@@ -2,7 +2,10 @@ import 'package:go_router/go_router.dart';
 import 'package:physioghar/core/router/app_routes.dart';
 import 'package:physioghar/features/auth/presentation/screens/login_screen.dart';
 import 'package:physioghar/features/auth/presentation/screens/register_screen.dart';
-import 'package:physioghar/features/patient/presentation/screens/patient_home_screen.dart';
+import 'package:physioghar/features/patient/presentation/models/patient_booking_details_args.dart';
+import 'package:physioghar/features/patient/presentation/screens/patient_booking_details_screen.dart';
+import 'package:physioghar/features/patient/presentation/screens/patient_booking_screen.dart';
+import 'package:physioghar/features/patient/presentation/screens/patient_profile_settings_screen.dart';
 import 'package:physioghar/features/dashboard/presentation/screens/dashboard_screen.dart';
 import 'package:physioghar/features/booking/presentation/screens/bookings_screen.dart';
 import 'package:physioghar/features/home/presentation/screens/home_screen.dart';
@@ -33,7 +36,19 @@ final appRouter = GoRouter(
     ),
     GoRoute(
       path: AppRoutes.patientHome,
-      builder: (context, state) => const PatientHomeScreen(),
+      pageBuilder: (context, state) =>
+          const NoTransitionPage(child: PatientBookingScreen()),
+    ),
+    GoRoute(
+      path: AppRoutes.patientBookingDetails,
+      builder: (context, state) => PatientBookingDetailsScreen(
+        args: state.extra! as PatientBookingDetailsArgs,
+      ),
+    ),
+    GoRoute(
+      path: AppRoutes.patientProfileSettings,
+      pageBuilder: (context, state) =>
+          const NoTransitionPage(child: PatientProfileSettingsScreen()),
     ),
     GoRoute(
       path: AppRoutes.main,

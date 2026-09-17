@@ -8,7 +8,7 @@ import 'package:physioghar/core/common/widgets/app_spacing.dart';
 import 'package:physioghar/core/theme/app_colors.dart';
 import 'package:physioghar/core/theme/app_dimensions.dart';
 import 'package:physioghar/core/theme/app_text_styles.dart';
-import 'package:physioghar/features/schedule/data/models/schedule_slot.dart';
+import 'package:physioghar/features/schedule/data/models/response/schedule_slot.dart';
 import 'package:physioghar/features/schedule/presentation/providers/schedule_providers.dart';
 import 'package:physioghar/features/schedule/presentation/widgets/schedule_availability_banner_widget.dart';
 import 'package:physioghar/features/schedule/presentation/widgets/schedule_day_selector_widget.dart';

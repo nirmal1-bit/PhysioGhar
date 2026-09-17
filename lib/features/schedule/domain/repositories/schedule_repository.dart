@@ -1,7 +1,7 @@
 import 'package:physioghar/core/typedef/typedefs.dart';
-import 'package:physioghar/features/schedule/data/models/availability.dart';
-import 'package:physioghar/features/schedule/data/models/schedule.dart';
-import 'package:physioghar/features/schedule/data/models/schedule_slot.dart';
+import 'package:physioghar/features/schedule/data/models/response/availability.dart';
+import 'package:physioghar/features/schedule/data/models/response/schedule.dart';
+import 'package:physioghar/features/schedule/data/models/response/schedule_slot.dart';
 
 abstract interface class ScheduleRepository {
   EitherResponse<Schedule> getSchedule(DateTime date);

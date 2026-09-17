@@ -2,9 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:physioghar/core/api/base/base_remote_source.dart';
 import 'package:physioghar/core/constants/api_endponts.dart';
 import 'package:physioghar/core/typedef/typedefs.dart';
-import 'package:physioghar/features/schedule/data/models/availability.dart';
-import 'package:physioghar/features/schedule/data/models/schedule.dart';
-import 'package:physioghar/features/schedule/data/models/schedule_slot.dart';
+import 'package:physioghar/features/schedule/data/models/response/availability.dart';
+import 'package:physioghar/features/schedule/data/models/response/schedule.dart';
+import 'package:physioghar/features/schedule/data/models/response/schedule_slot.dart';
 import 'package:physioghar/features/schedule/domain/repositories/schedule_repository.dart';
 import 'package:physioghar/utils/date_utils.dart';
 
