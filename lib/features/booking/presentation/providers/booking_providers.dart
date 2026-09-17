@@ -42,11 +42,7 @@ class BookingController extends AsyncNotifier<List<Booking>> {
   }) async {
     final result = await ref
         .read(bookingRepositoryProvider)
-        .reschedule(
-          bookingId: bookingId,
-          slotId: slotId,
-          slotDate: slotDate,
-        );
+        .reschedule(bookingId: bookingId, slotId: slotId, slotDate: slotDate);
     return _replace(result);
   }
 

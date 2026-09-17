@@ -57,7 +57,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     }
 
     AppUtils.showSuccessSnackbar(context: context, message: 'Welcome back');
-    final authToken = ref.read(authControllerProvider).valueOrNull;
+    final authToken = await ref.read(authControllerProvider.future);
     if (authToken?.userType == 'patient') {
       if (mounted) context.go(AppRoutes.patientHome);
       return;

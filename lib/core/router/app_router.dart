@@ -2,7 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:physioghar/core/router/app_routes.dart';
 import 'package:physioghar/features/auth/presentation/screens/login_screen.dart';
 import 'package:physioghar/features/auth/presentation/screens/register_screen.dart';
-import 'package:physioghar/features/auth/presentation/screens/patient_home_screen.dart';
+import 'package:physioghar/features/patient/presentation/screens/patient_home_screen.dart';
 import 'package:physioghar/features/dashboard/presentation/screens/dashboard_screen.dart';
 import 'package:physioghar/features/booking/presentation/screens/bookings_screen.dart';
 import 'package:physioghar/features/home/presentation/screens/home_screen.dart';
@@ -11,6 +11,8 @@ import 'package:physioghar/features/profile/presentation/screens/profile_details
 import 'package:physioghar/features/profile/presentation/screens/complaint_screen.dart';
 import 'package:physioghar/features/profile/presentation/screens/profile_info_screen.dart';
 import 'package:physioghar/features/profile/presentation/screens/profile_settings_screen.dart';
+import 'package:physioghar/features/patient_notes/presentation/screens/patient_notes_details_screen.dart';
+import 'package:physioghar/features/patient_notes/presentation/screens/patient_notes_screen.dart';
 import 'package:physioghar/features/schedule/presentation/screens/schedule_screen.dart';
 import 'package:physioghar/features/splash/splash.dart';
 
@@ -62,6 +64,22 @@ final appRouter = GoRouter(
             GoRoute(
               path: AppRoutes.bookings,
               builder: (context, state) => const BookingsScreen(),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: AppRoutes.patients,
+              builder: (context, state) => const PatientNotesScreen(),
+              routes: [
+                GoRoute(
+                  path: ':patientId',
+                  builder: (context, state) => PatientNotesDetailsScreen(
+                    patientId: int.parse(state.pathParameters['patientId']!),
+                  ),
+                ),
+              ],
             ),
           ],
         ),

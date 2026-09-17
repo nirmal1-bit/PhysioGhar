@@ -9,6 +9,8 @@ class AppTextField extends StatelessWidget {
     this.keyboardType,
     this.textInputAction,
     this.obscureText = false,
+    this.maxLines = 1,
+    this.maxLength,
     this.autofillHints,
     this.textCapitalization = TextCapitalization.none,
     this.validator,
@@ -22,6 +24,8 @@ class AppTextField extends StatelessWidget {
   final TextInputType? keyboardType;
   final TextInputAction? textInputAction;
   final bool obscureText;
+  final int? maxLines;
+  final int? maxLength;
   final Iterable<String>? autofillHints;
   final TextCapitalization textCapitalization;
   final String? Function(String?)? validator;
@@ -35,6 +39,8 @@ class AppTextField extends StatelessWidget {
       keyboardType: keyboardType,
       textInputAction: textInputAction,
       obscureText: obscureText,
+      maxLines: obscureText ? 1 : maxLines,
+      maxLength: maxLength,
       autofillHints: autofillHints,
       textCapitalization: textCapitalization,
       validator: validator,

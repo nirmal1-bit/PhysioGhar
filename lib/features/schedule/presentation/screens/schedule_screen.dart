@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:physioghar/core/api/error/app_error.dart';
 import 'package:physioghar/core/common/widgets/app_loading_widget.dart';
+import 'package:physioghar/core/common/widgets/app_empty_state.dart';
 import 'package:physioghar/core/common/widgets/app_primary_button.dart';
 import 'package:physioghar/core/common/widgets/app_spacing.dart';
 import 'package:physioghar/core/theme/app_colors.dart';
@@ -11,7 +12,6 @@ import 'package:physioghar/features/schedule/data/models/schedule_slot.dart';
 import 'package:physioghar/features/schedule/presentation/providers/schedule_providers.dart';
 import 'package:physioghar/features/schedule/presentation/widgets/schedule_availability_banner_widget.dart';
 import 'package:physioghar/features/schedule/presentation/widgets/schedule_day_selector_widget.dart';
-import 'package:physioghar/features/schedule/presentation/widgets/schedule_empty_state_widget.dart';
 import 'package:physioghar/features/schedule/presentation/widgets/schedule_legend_widget.dart';
 import 'package:physioghar/features/schedule/presentation/widgets/schedule_slot_tile_widget.dart';
 import 'package:physioghar/utils/app_utils.dart';
@@ -214,7 +214,12 @@ class _ScheduleContentState extends ConsumerState<_ScheduleContent> {
             ),
             const VerticalSpacing(AppDimensions.spacingSm),
             if (selectedSlots.isEmpty)
-              const ScheduleEmptyStateWidget()
+              const AppEmptyState(
+                icon: Icons.calendar_today_outlined,
+                title: 'No slots for this day',
+                message:
+                    'Add an available time slot to start accepting bookings.',
+              )
             else
               ...selectedSlots.map(
                 (slot) => Padding(

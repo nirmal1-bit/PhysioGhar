@@ -56,6 +56,12 @@ class AuthController extends AsyncNotifier<AuthToken?> {
     );
   }
 
+  Future<void> logout() async {
+    final session = await ref.read(sessionServiceProvider.future);
+    await session.removeToken();
+    state = const AsyncData(null);
+  }
+
   static String errorMessage(AppError error) {
     return error.when(
       serverError: (serverError) => serverError.message,

@@ -26,6 +26,7 @@ class SessionService {
 
   Future<void> removeToken() async {
     await _prefs.remove(StorageKeys.token);
+    await _prefs.remove(StorageKeys.userRoleKey);
   }
 
   bool get hasSession => token.isNotEmpty;

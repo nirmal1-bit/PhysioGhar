@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:physioghar/core/common/widgets/app_empty_state.dart';
 import 'package:physioghar/core/theme/app_colors.dart';
 import 'package:physioghar/core/theme/app_dimensions.dart';
 import 'package:physioghar/core/theme/app_text_styles.dart';
@@ -21,9 +22,11 @@ class BookingListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     if (bookings.isEmpty) {
       return Center(
-        child: Padding(
-          padding: const EdgeInsets.all(AppDimensions.pagePadding),
-          child: Text(emptyMessage, style: AppTextStyles.bodySmall),
+        child: AppEmptyState(
+          icon: Icons.event_note_outlined,
+          title: emptyMessage,
+          message: 'New activity will appear here when it is available.',
+          compact: true,
         ),
       );
     }

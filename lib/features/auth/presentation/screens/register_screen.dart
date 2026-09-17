@@ -177,10 +177,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
               initialValue: _userType,
               decoration: const InputDecoration(labelText: 'Account type'),
               items: const [
-                DropdownMenuItem(
-                  value: 'therapist',
-                  child: Text('Therapist'),
-                ),
+                DropdownMenuItem(value: 'therapist', child: Text('Therapist')),
                 DropdownMenuItem(value: 'patient', child: Text('Patient')),
               ],
               onChanged: isLoading

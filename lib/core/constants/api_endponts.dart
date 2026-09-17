@@ -10,4 +10,13 @@ abstract final class ApiEndpoints {
   static const availability = '/schedule/availability';
   static const schedule = '/schedule';
   static const scheduleSlots = '/schedule/slots';
+  static const patients = '/patients';
+  static String patient(int patientId) => '/patients/$patientId';
+  static String patientNotes(int patientId) => '/patients/$patientId/notes';
+  static String patientNote(int patientId, int noteId) =>
+      '/patients/$patientId/notes/$noteId';
+  static const availableTherapists = '/bookings/available-therapists';
+  static String availableTherapistSlots(int therapistId) =>
+      '/bookings/therapists/$therapistId/available-slots';
+  static const createBooking = '/bookings';
 }

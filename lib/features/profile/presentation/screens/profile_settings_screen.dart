@@ -5,11 +5,11 @@ import 'package:go_router/go_router.dart';
 import 'package:physioghar/core/common/widgets/app_bar.dart';
 import 'package:physioghar/core/common/widgets/app_settings_tile.dart';
 import 'package:physioghar/core/common/widgets/app_spacing.dart';
-import 'package:physioghar/core/providers/core_providers.dart';
 import 'package:physioghar/core/router/app_routes.dart';
 import 'package:physioghar/core/theme/app_colors.dart';
 import 'package:physioghar/core/theme/app_dimensions.dart';
 import 'package:physioghar/core/theme/app_text_styles.dart';
+import 'package:physioghar/features/auth/presentation/providers/auth_providers.dart';
 import 'package:physioghar/features/profile/data/models/response/profile.dart';
 import 'package:physioghar/features/profile/presentation/providers/profile_providers.dart';
 import 'package:physioghar/utils/app_utils.dart';
@@ -64,8 +64,7 @@ class _ProfileSettingsScreenState extends ConsumerState<ProfileSettingsScreen> {
   }
 
   Future<void> _performLogout() async {
-    final session = await ref.read(sessionServiceProvider.future);
-    await session.removeToken();
+    await ref.read(authControllerProvider.notifier).logout();
     ref.invalidate(profileControllerProvider);
     if (!mounted) return;
 

@@ -14,6 +14,7 @@ class HomeScreen extends StatelessWidget {
     ('Dashboard', Icons.dashboard_outlined, Icons.dashboard_rounded),
     ('Schedule', Icons.calendar_month_outlined, Icons.calendar_month_rounded),
     ('Bookings', Icons.event_note_outlined, Icons.event_note_rounded),
+    ('Patients', Icons.groups_outlined, Icons.groups_rounded),
     ('Profile', Icons.person_outline_rounded, Icons.person_rounded),
   ];
 
@@ -80,7 +81,6 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
-
 
 class ScheduleView extends StatelessWidget {
   const ScheduleView({super.key});

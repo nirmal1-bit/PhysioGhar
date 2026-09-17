@@ -6,6 +6,7 @@ import 'package:physioghar/features/schedule/data/models/availability.dart';
 import 'package:physioghar/features/schedule/data/models/schedule.dart';
 import 'package:physioghar/features/schedule/data/models/schedule_slot.dart';
 import 'package:physioghar/features/schedule/domain/repositories/schedule_repository.dart';
+import 'package:physioghar/utils/date_utils.dart';
 
 class ScheduleRepositoryImpl extends BaseRemoteSource
     implements ScheduleRepository {
@@ -17,7 +18,7 @@ class ScheduleRepositoryImpl extends BaseRemoteSource
       request: (dio) async {
         final response = await dio.get(
           ApiEndpoints.schedule,
-          queryParameters: {'date': _dateValue(date)},
+          queryParameters: {'date': formatApiDate(date)},
         );
         return Schedule.fromJson(response.data as Map<String, dynamic>);
       },
@@ -84,18 +85,12 @@ class ScheduleRepositoryImpl extends BaseRemoteSource
       request: (dio) async {
         final response = await dio.patch(
           '${ApiEndpoints.scheduleSlots}/$slotId',
-          queryParameters: {'date': _dateValue(date)},
+          queryParameters: {'date': formatApiDate(date)},
           data: {'status': status},
           options: Options(contentType: Headers.jsonContentType),
         );
         return ScheduleSlot.fromJson(response.data as Map<String, dynamic>);
       },
     );
-  }
-
-  String _dateValue(DateTime date) {
-    final month = date.month.toString().padLeft(2, '0');
-    final day = date.day.toString().padLeft(2, '0');
-    return '${date.year}-$month-$day';
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:physioghar/core/api/error/app_error.dart';
 import 'package:physioghar/core/common/widgets/app_loading_widget.dart';
+import 'package:physioghar/core/common/widgets/app_empty_state.dart';
 import 'package:physioghar/core/theme/app_colors.dart';
 import 'package:physioghar/core/theme/app_dimensions.dart';
 import 'package:physioghar/core/theme/app_text_styles.dart';
@@ -9,7 +10,6 @@ import 'package:physioghar/features/booking/data/models/response/booking.dart';
 import 'package:physioghar/features/dashboard/presentation/providers/dashboard_providers.dart';
 import 'package:physioghar/features/dashboard/presentation/widgets/availability_card_widget.dart';
 import 'package:physioghar/features/dashboard/presentation/widgets/booking_tile_widget.dart';
-import 'package:physioghar/features/dashboard/presentation/widgets/dashboard_empty_state_widget.dart';
 import 'package:physioghar/features/dashboard/presentation/widgets/dashboard_header_widget.dart';
 import 'package:physioghar/features/dashboard/presentation/widgets/dashboard_section_header_widget.dart';
 import 'package:physioghar/features/dashboard/presentation/widgets/dashboard_summary_card_widget.dart';
@@ -144,8 +144,15 @@ class _DashboardContentState extends ConsumerState<_DashboardContent> {
         const DashboardSectionHeaderWidget(title: "Today's schedule"),
         const SizedBox(height: AppDimensions.spacingMd),
         if (todayBookings.isEmpty)
-          const DashboardEmptyStateWidget(
-            message: 'No sessions scheduled for today.',
+          const AppEmptyState(
+            icon: Icons.event_available_outlined,
+            title: 'No sessions scheduled for today',
+            message: 'Your confirmed sessions will appear here.',
+            iconColor: AppColors.textMuted,
+            titleColor: AppColors.textSecondary,
+            messageColor: AppColors.textSecondary,
+            backgroundColor: AppColors.surface,
+            showIconBackground: false,
           )
         else
           ...todayBookings.map(
@@ -161,7 +168,16 @@ class _DashboardContentState extends ConsumerState<_DashboardContent> {
         const DashboardSectionHeaderWidget(title: 'Upcoming sessions'),
         const SizedBox(height: AppDimensions.spacingMd),
         if (upcoming.isEmpty)
-          const DashboardEmptyStateWidget(message: 'No upcoming sessions yet.')
+          const AppEmptyState(
+            icon: Icons.upcoming_outlined,
+            title: 'No upcoming sessions yet',
+            message: 'Accepted bookings will appear here.',
+            iconColor: AppColors.textMuted,
+            titleColor: AppColors.textSecondary,
+            messageColor: AppColors.textSecondary,
+            backgroundColor: AppColors.surface,
+            showIconBackground: false,
+          )
         else
           ...upcoming
               .take(3)
