@@ -85,7 +85,7 @@ class _DashboardContentState extends ConsumerState<_DashboardContent> {
         .where(
           (booking) =>
               booking.status == 'accepted' &&
-              !booking.slotDate.isBefore(
+              booking.slotDate.isAfter(
                 DateTime(today.year, today.month, today.day),
               ),
         )
