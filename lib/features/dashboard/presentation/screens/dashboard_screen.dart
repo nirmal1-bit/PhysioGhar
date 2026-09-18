@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:physioghar/core/api/error/app_error.dart';
+import 'package:physioghar/core/common/widgets/app_bar.dart';
 import 'package:physioghar/core/common/widgets/app_loading_widget.dart';
 import 'package:physioghar/core/common/widgets/app_empty_state.dart';
 import 'package:physioghar/core/theme/app_colors.dart';
@@ -96,103 +97,106 @@ class _DashboardContentState extends ConsumerState<_DashboardContent> {
         .where((item) => item.status == 'completed')
         .length;
 
-    return ListView(
-      physics: const AlwaysScrollableScrollPhysics(),
-      padding: const EdgeInsets.fromLTRB(
-        AppDimensions.pagePadding,
-        AppDimensions.spacingLg,
-        AppDimensions.pagePadding,
-        AppDimensions.spacingXxl,
-      ),
-      children: [
-        DashboardHeaderWidget(
-          profile: widget.profile,
-          date: formatShortDate(today),
+    return Scaffold(
+      appBar: EmptyAppBar(),
+      body: ListView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        padding: const EdgeInsets.fromLTRB(
+          AppDimensions.pagePadding,
+          AppDimensions.spacingLg,
+          AppDimensions.pagePadding,
+          AppDimensions.spacingXxl,
         ),
-        const SizedBox(height: AppDimensions.sectionGap),
-        AvailabilityCardWidget(
-          isAvailable: widget.data.availability.isAvailable,
-          isLoading: _isUpdatingAvailability,
-          onChanged: _changeAvailability,
-        ),
-        const SizedBox(height: AppDimensions.sectionGap),
-        Row(
-          children: [
-            DashboardSummaryCardWidget(
-              label: "Today's sessions",
-              value: todayBookings.length,
-              icon: Icons.event_available_outlined,
-              color: AppColors.primary,
-            ),
-            const SizedBox(width: AppDimensions.gridGap),
-            DashboardSummaryCardWidget(
-              label: 'Requests',
-              value: pendingCount,
-              icon: Icons.inbox_outlined,
-              color: AppColors.accent,
-            ),
-            const SizedBox(width: AppDimensions.gridGap),
-            DashboardSummaryCardWidget(
-              label: 'Completed',
-              value: completedCount,
-              icon: Icons.check_circle_outline,
-              color: AppColors.success,
-            ),
-          ],
-        ),
-        const SizedBox(height: AppDimensions.sectionGap),
-        const DashboardSectionHeaderWidget(title: "Today's schedule"),
-        const SizedBox(height: AppDimensions.spacingMd),
-        if (todayBookings.isEmpty)
-          const AppEmptyState(
-            icon: Icons.event_available_outlined,
-            title: 'No sessions scheduled for today',
-            message: 'Your confirmed sessions will appear here.',
-            iconColor: AppColors.textMuted,
-            titleColor: AppColors.textSecondary,
-            messageColor: AppColors.textSecondary,
-            backgroundColor: AppColors.surface,
-            showIconBackground: false,
-          )
-        else
-          ...todayBookings.map(
-            (booking) => Padding(
-              padding: const EdgeInsets.only(bottom: AppDimensions.spacingMd),
-              child: BookingTileWidget(
-                booking: booking,
-                onTap: () => _showBookingDetails(booking),
-              ),
-            ),
+        children: [
+          DashboardHeaderWidget(
+            profile: widget.profile,
+            date: formatShortDate(today),
           ),
-        const SizedBox(height: AppDimensions.spacingMd),
-        const DashboardSectionHeaderWidget(title: 'Upcoming sessions'),
-        const SizedBox(height: AppDimensions.spacingMd),
-        if (upcoming.isEmpty)
-          const AppEmptyState(
-            icon: Icons.upcoming_outlined,
-            title: 'No upcoming sessions yet',
-            message: 'Accepted bookings will appear here.',
-            iconColor: AppColors.textMuted,
-            titleColor: AppColors.textSecondary,
-            messageColor: AppColors.textSecondary,
-            backgroundColor: AppColors.surface,
-            showIconBackground: false,
-          )
-        else
-          ...upcoming
-              .take(3)
-              .map(
-                (booking) => Padding(
-                  padding: const EdgeInsets.only(
-                    bottom: AppDimensions.spacingMd,
-                  ),
-                  child: BookingTileWidget(
-                    booking: booking,
-                    onTap: () => _showBookingDetails(booking),
-                  ),
+          const SizedBox(height: AppDimensions.sectionGap),
+          AvailabilityCardWidget(
+            isAvailable: widget.data.availability.isAvailable,
+            isLoading: _isUpdatingAvailability,
+            onChanged: _changeAvailability,
+          ),
+          const SizedBox(height: AppDimensions.sectionGap),
+          Row(
+            children: [
+              DashboardSummaryCardWidget(
+                label: "Today's sessions",
+                value: todayBookings.length,
+                icon: Icons.event_available_outlined,
+                color: AppColors.primary,
+              ),
+              const SizedBox(width: AppDimensions.gridGap),
+              DashboardSummaryCardWidget(
+                label: 'Requests',
+                value: pendingCount,
+                icon: Icons.inbox_outlined,
+                color: AppColors.accent,
+              ),
+              const SizedBox(width: AppDimensions.gridGap),
+              DashboardSummaryCardWidget(
+                label: 'Completed',
+                value: completedCount,
+                icon: Icons.check_circle_outline,
+                color: AppColors.success,
+              ),
+            ],
+          ),
+          const SizedBox(height: AppDimensions.sectionGap),
+          const DashboardSectionHeaderWidget(title: "Today's schedule"),
+          const SizedBox(height: AppDimensions.spacingMd),
+          if (todayBookings.isEmpty)
+            const AppEmptyState(
+              icon: Icons.event_available_outlined,
+              title: 'No sessions scheduled for today',
+              message: 'Your confirmed sessions will appear here.',
+              iconColor: AppColors.textMuted,
+              titleColor: AppColors.textSecondary,
+              messageColor: AppColors.textSecondary,
+              backgroundColor: AppColors.surface,
+              showIconBackground: false,
+            )
+          else
+            ...todayBookings.map(
+              (booking) => Padding(
+                padding: const EdgeInsets.only(bottom: AppDimensions.spacingMd),
+                child: BookingTileWidget(
+                  booking: booking,
+                  onTap: () => _showBookingDetails(booking),
                 ),
               ),
-      ],
+            ),
+          const SizedBox(height: AppDimensions.spacingMd),
+          const DashboardSectionHeaderWidget(title: 'Upcoming sessions'),
+          const SizedBox(height: AppDimensions.spacingMd),
+          if (upcoming.isEmpty)
+            const AppEmptyState(
+              icon: Icons.upcoming_outlined,
+              title: 'No upcoming sessions yet',
+              message: 'Accepted bookings will appear here.',
+              iconColor: AppColors.textMuted,
+              titleColor: AppColors.textSecondary,
+              messageColor: AppColors.textSecondary,
+              backgroundColor: AppColors.surface,
+              showIconBackground: false,
+            )
+          else
+            ...upcoming
+                .take(3)
+                .map(
+                  (booking) => Padding(
+                    padding: const EdgeInsets.only(
+                      bottom: AppDimensions.spacingMd,
+                    ),
+                    child: BookingTileWidget(
+                      booking: booking,
+                      onTap: () => _showBookingDetails(booking),
+                    ),
+                  ),
+                ),
+        ],
+      ),
     );
   }
 

@@ -43,6 +43,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
   Future<void> _register() async {
     if (!_formKey.currentState!.validate()) return;
+    AppUtils.hideKeyboard();
 
     final error = await ref
         .read(authControllerProvider.notifier)

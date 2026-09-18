@@ -18,19 +18,21 @@ class AppUtils {
   }
 
   static void unfocusKeyboard(BuildContext context) {
-    final currentFocus = FocusScope.of(context);
-    if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
-      FocusManager.instance.primaryFocus!.unfocus();
-    }
+    FocusScope.of(context).unfocus();
   }
 
-  static void confirmationDialog({
+  /// Dismisses the active keyboard without requiring a widget context.
+  static void hideKeyboard() {
+    FocusManager.instance.primaryFocus?.unfocus();
+  }
+
+  static Future<void> confirmationDialog({
     required BuildContext context,
     required String title,
     required String message,
-    required VoidCallback onConfirm,
-  }) {
-    showDialog(
+    required Future<void> Function() onConfirm,
+  }) async {
+    await showDialog(
       context: context,
       builder: (BuildContext dialogContext) {
         return AlertDialog(
@@ -42,9 +44,9 @@ class AppUtils {
               child: const Text('No'),
             ),
             TextButton(
-              onPressed: () {
+              onPressed: () async {
                 Navigator.of(dialogContext).pop(true);
-                onConfirm();
+                await onConfirm();
               },
               child: const Text('Yes'),
             ),

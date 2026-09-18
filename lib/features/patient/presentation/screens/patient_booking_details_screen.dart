@@ -144,6 +144,7 @@ class _PatientBookingDetailsScreenState
 
   Future<void> _submit() async {
     if (!_formKey.currentState!.validate()) return;
+    AppUtils.hideKeyboard();
     setState(() => _isSaving = true);
     final args = widget.args;
     final error = await ref

@@ -37,6 +37,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   Future<void> _login() async {
     if (!_formKey.currentState!.validate()) return;
+    AppUtils.hideKeyboard();
 
     final error = await ref
         .read(authControllerProvider.notifier)
@@ -63,6 +64,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       return;
     }
     try {
+      // Profile data belongs to the previous session unless it is explicitly
+      // refreshed. The new therapist token must be used for this request.
+      ref.invalidate(profileControllerProvider);
       final profile = await ref.read(profileControllerProvider.future);
       if (!mounted) return;
       context.go(profile == null ? AppRoutes.profileEdit : AppRoutes.main);

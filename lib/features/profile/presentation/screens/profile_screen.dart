@@ -52,6 +52,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
 
   Future<void> _save() async {
     if (!_formKey.currentState!.validate()) return;
+    AppUtils.hideKeyboard();
 
     final error = await ref
         .read(profileControllerProvider.notifier)

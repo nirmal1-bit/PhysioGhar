@@ -111,6 +111,7 @@ class _ScheduleContentState extends ConsumerState<_ScheduleContent> {
   }
 
   Future<void> _addSlot() async {
+    AppUtils.hideKeyboard();
     final startTime = await showTimePicker(
       context: context,
       initialTime: const TimeOfDay(hour: 9, minute: 0),

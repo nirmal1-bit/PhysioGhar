@@ -23,6 +23,9 @@ class AuthController extends AsyncNotifier<AuthToken?> {
 
   Future<AppError?> login(LoginRequest request) async {
     state = const AsyncLoading();
+    // Ensure a new login cannot inherit the previous account's credentials.
+    final session = await ref.read(sessionServiceProvider.future);
+    await session.removeToken();
     final result = await ref.read(authRepositoryProvider).login(request);
 
     return result.fold(
@@ -31,7 +34,6 @@ class AuthController extends AsyncNotifier<AuthToken?> {
         return error;
       },
       (token) async {
-        final session = await ref.read(sessionServiceProvider.future);
         await session.saveToken(token.accessToken);
         await session.saveUserRole(token.userType);
         state = AsyncData(token);
@@ -57,9 +59,11 @@ class AuthController extends AsyncNotifier<AuthToken?> {
   }
 
   Future<void> logout() async {
+    // Clear in-memory auth immediately so no screen can treat the old user as
+    // authenticated while the persisted session is being removed.
+    state = const AsyncData(null);
     final session = await ref.read(sessionServiceProvider.future);
     await session.removeToken();
-    state = const AsyncData(null);
   }
 
   static String errorMessage(AppError error) {

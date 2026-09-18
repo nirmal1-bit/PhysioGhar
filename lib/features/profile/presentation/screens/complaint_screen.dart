@@ -37,6 +37,7 @@ class _ComplaintScreenState extends ConsumerState<ComplaintScreen> {
 
   Future<void> _submit() async {
     if (!_formKey.currentState!.validate()) return;
+    AppUtils.hideKeyboard();
     setState(() => _isSubmitting = true);
     final error = await ref
         .read(complaintControllerProvider.notifier)

@@ -272,6 +272,7 @@ class _PatientNoteFormDialogState
 
   Future<void> _save() async {
     if (!_formKey.currentState!.validate()) return;
+    AppUtils.hideKeyboard();
     setState(() => _isSaving = true);
     final error = await ref
         .read(patientNotesProvider.notifier)

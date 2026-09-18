@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:physioghar/core/theme/app_colors.dart';
 import 'package:physioghar/core/theme/app_text_styles.dart';
 
-/// A blank app bar for screens that do not need visible app-bar content.
+/// a blank app bar for screens that do not need visible app-bar content.
 class EmptyAppBar extends StatelessWidget implements PreferredSizeWidget {
   const EmptyAppBar({super.key});
 
+  // This app bar is intentionally empty; reserving kToolbarHeight here adds
+  // an invisible 56px gap above dashboard and authentication content.
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => Size.zero;
 
   @override
   Widget build(BuildContext context) {
@@ -15,13 +17,15 @@ class EmptyAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: AppColors.background,
       elevation: 0,
       scrolledUnderElevation: 0,
+      toolbarHeight: 0,
+      primary: false,
       automaticallyImplyLeading: false,
       title: const SizedBox.shrink(),
     );
   }
 }
 
-/// The common visible app-bar surface used throughout the application.
+/// the common visible app-bar surface used throughout the application.
 class FilledAppBar extends StatelessWidget implements PreferredSizeWidget {
   const FilledAppBar({
     super.key,
