@@ -263,79 +263,6 @@ For example, `profileRepositoryProvider` reads `dioProvider` and
 the `ProfileRepository` interface. `profileControllerProvider` then reads that
 repository and exposes profile state to profile screens.
 
-
-## Implemented assignment flows
-
-### Therapist dashboard
-
-- Therapist header and current date
-- Availability status and toggle
-- Today's schedule
-- Upcoming sessions
-- Today's, pending, and completed summary cards
-- Empty and error states
-
-### Schedule and availability
-
-- Weekly day/date selection
-- Recurring weekday time slots
-- Open, booked, and blocked states
-- Add an available slot
-- Block and unblock open slots
-- Enable or disable therapist availability
-
-### Booking and session management
-
-- Requests, upcoming, completed, and cancelled tabs
-- Accept or decline booking requests
-- Complete sessions
-- Reschedule sessions
-- Add therapist remarks
-- State updates after every action
-
-### Patient records and notes
-
-- Therapist patient list
-- Patient details and session history
-- Add and edit session notes
-- Exercises and next-session fields
-- Notes restricted to accepted or completed sessions
-
-### Account and profile
-
-- Profile setup and editing
-- Profile image selection and upload
-- Professional details and contact display
-- Availability navigation
-- Language selector for English/Nepali preference
-- Privacy policy, terms, complaints, and logout
-
-### Patient booking flow
-
-- Browse available therapists
-- Select a date and available slot
-- Complete booking details on a dedicated screen
-- Submit a booking request
-- Patient profile/settings and logout
-
-### Complaints
-
-- Select complaint category
-- Enter subject and description
-- Submit to the backend
-- Display success/error feedback
-- Display previously submitted complaints
-
-## Navigation
-
-GoRouter provides the main routes. Therapists use a persistent navigation shell
-with Dashboard, Schedule, Bookings, Patients, and Profile tabs. Patients use a
-separate booking/profile navigation flow.
-
-Startup reads the persisted session and routes users according to the saved
-account type. Therapist login checks profile completion before routing to the
-dashboard. Patient login routes directly to patient booking.
-
 ## Design approach
 
 The UI follows the assignment's healthcare style:
@@ -361,8 +288,3 @@ The UI follows the assignment's healthcare style:
 - Language selection stores the selected preference and demonstrates the
   English/Nepali option without translating every screen.
 
-## Related backend
-
-The FastAPI backend is in the sibling `backend/` repository directory. Its
-setup, migrations, API endpoints, and production deployment instructions are
-documented in `backend/README.md`.
