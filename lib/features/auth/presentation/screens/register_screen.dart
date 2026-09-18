@@ -12,6 +12,7 @@ import 'package:physioghar/features/auth/data/models/requests/register_request.d
 import 'package:physioghar/features/auth/presentation/providers/auth_providers.dart';
 import 'package:physioghar/features/auth/presentation/widgets/auth_page_layout.dart';
 import 'package:physioghar/utils/app_utils.dart';
+import 'package:physioghar/l10n/generated/app_localizations.dart';
 
 class RegisterScreen extends ConsumerStatefulWidget {
   const RegisterScreen({super.key});
@@ -44,6 +45,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   Future<void> _register() async {
     if (!_formKey.currentState!.validate()) return;
     AppUtils.hideKeyboard();
+    final l10n = AppLocalizations.of(context)!;
 
     final error = await ref
         .read(authControllerProvider.notifier)
@@ -68,7 +70,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
     AppUtils.showSuccessSnackbar(
       context: context,
-      message: 'Account created. Please sign in.',
+      message: l10n.accountCreated,
     );
     context.go(AppRoutes.login);
   }
@@ -76,59 +78,60 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     final isLoading = ref.watch(authControllerProvider).isLoading;
+    final l10n = AppLocalizations.of(context)!;
 
     return AuthPageLayout(
-      eyebrow: 'Join PhysioGhar',
-      title: 'Create your account.',
-      subtitle: 'Choose an account type to get started.',
+      eyebrow: l10n.registerEyebrow,
+      title: l10n.registerTitle,
+      subtitle: l10n.registerSubtitle,
       form: Form(
         key: _formKey,
         child: Column(
           children: [
             AppTextField(
               controller: _nameController,
-              label: 'Full name',
+              label: l10n.fullName,
               textInputAction: TextInputAction.next,
               textCapitalization: TextCapitalization.words,
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
-                  return 'Name is required';
+                  return l10n.nameRequired;
                 }
-                if (value.trim().length < 2) return 'Enter your full name';
+                if (value.trim().length < 2) return l10n.fullNameRequired;
                 return null;
               },
             ),
             const VerticalSpacing(AppDimensions.spacingLg),
             AppTextField(
               controller: _usernameController,
-              label: 'Username',
+              label: l10n.username,
               textInputAction: TextInputAction.next,
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
-                  return 'Username is required';
+                  return l10n.usernameRequired;
                 }
-                if (value.trim().length < 3) return 'Use at least 3 characters';
+                if (value.trim().length < 3) return l10n.minimumUsername;
                 return null;
               },
             ),
             const VerticalSpacing(AppDimensions.spacingLg),
             AppTextField(
               controller: _emailController,
-              label: 'Email',
+              label: l10n.email,
               keyboardType: TextInputType.emailAddress,
               textInputAction: TextInputAction.next,
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
-                  return 'Email is required';
+                  return l10n.emailRequired;
                 }
-                if (!value.isValidEmail) return 'Enter a valid email';
+                if (!value.isValidEmail) return l10n.validEmail;
                 return null;
               },
             ),
             const VerticalSpacing(AppDimensions.spacingLg),
             AppTextField(
               controller: _passwordController,
-              label: 'Password',
+              label: l10n.password,
               obscureText: _obscurePassword,
               textInputAction: TextInputAction.next,
               suffixIcon: IconButton(
@@ -141,16 +144,16 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
               ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Password is required';
+                  return l10n.passwordRequired;
                 }
-                if (value.length < 8) return 'Use at least 8 characters';
+                if (value.length < 8) return l10n.minimumPassword;
                 return null;
               },
             ),
             const VerticalSpacing(AppDimensions.spacingLg),
             AppTextField(
               controller: _confirmPasswordController,
-              label: 'Confirm password',
+              label: l10n.confirmPassword,
               obscureText: _obscureConfirmation,
               textInputAction: TextInputAction.done,
               suffixIcon: IconButton(
@@ -167,7 +170,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
               ),
               validator: (value) {
                 if (value != _passwordController.text) {
-                  return 'Passwords do not match';
+                  return l10n.passwordsMismatch;
                 }
                 return null;
               },
@@ -176,10 +179,13 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
             const VerticalSpacing(AppDimensions.spacingLg),
             DropdownButtonFormField<String>(
               initialValue: _userType,
-              decoration: const InputDecoration(labelText: 'Account type'),
-              items: const [
-                DropdownMenuItem(value: 'therapist', child: Text('Therapist')),
-                DropdownMenuItem(value: 'patient', child: Text('Patient')),
+              decoration: InputDecoration(labelText: l10n.accountType),
+              items: [
+                DropdownMenuItem(
+                  value: 'therapist',
+                  child: Text(l10n.therapist),
+                ),
+                DropdownMenuItem(value: 'patient', child: Text(l10n.patient)),
               ],
               onChanged: isLoading
                   ? null
@@ -189,7 +195,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
             ),
             const VerticalSpacing(AppDimensions.spacingXl),
             AppPrimaryButton(
-              label: 'Create account',
+              label: l10n.createAccount,
               onPressed: _register,
               isLoading: isLoading,
               expanded: true,
@@ -200,9 +206,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
       footer: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Text('Already have an account?'),
+          Text(l10n.alreadyHaveAccount),
           AppTextButton(
-            label: 'Sign in',
+            label: l10n.signInAction,
             onPressed: isLoading ? null : () => context.go(AppRoutes.login),
           ),
         ],

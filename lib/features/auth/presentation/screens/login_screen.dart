@@ -14,6 +14,7 @@ import 'package:physioghar/features/auth/presentation/providers/auth_providers.d
 import 'package:physioghar/features/auth/presentation/widgets/auth_page_layout.dart';
 import 'package:physioghar/features/profile/presentation/providers/profile_providers.dart';
 import 'package:physioghar/utils/app_utils.dart';
+import 'package:physioghar/l10n/generated/app_localizations.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -38,6 +39,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   Future<void> _login() async {
     if (!_formKey.currentState!.validate()) return;
     AppUtils.hideKeyboard();
+    final l10n = AppLocalizations.of(context)!;
 
     final error = await ref
         .read(authControllerProvider.notifier)
@@ -57,7 +59,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       return;
     }
 
-    AppUtils.showSuccessSnackbar(context: context, message: 'Welcome back');
+    AppUtils.showSuccessSnackbar(context: context, message: l10n.welcomeBack);
     final authToken = await ref.read(authControllerProvider.future);
     if (authToken?.userType == 'patient') {
       if (mounted) context.go(AppRoutes.patientHome);
@@ -82,18 +84,19 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final isLoading = ref.watch(authControllerProvider).isLoading;
+    final l10n = AppLocalizations.of(context)!;
 
     return AuthPageLayout(
-      eyebrow: 'PhysioGhar',
-      title: 'Welcome back.',
-      subtitle: 'Sign in to continue to your account.',
+      eyebrow: l10n.loginEyebrow,
+      title: l10n.loginTitle,
+      subtitle: l10n.loginSubtitle,
       form: Form(
         key: _formKey,
         child: Column(
           children: [
             AppTextField(
               controller: _emailController,
-              label: 'Email',
+              label: l10n.email,
               keyboardType: TextInputType.emailAddress,
               textInputAction: TextInputAction.next,
               autofillHints: const [
@@ -102,16 +105,16 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               ],
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
-                  return 'Email is required';
+                  return l10n.emailRequired;
                 }
-                if (!value.isValidEmail) return 'Enter a valid email';
+                if (!value.isValidEmail) return l10n.validEmail;
                 return null;
               },
             ),
             const VerticalSpacing(AppDimensions.spacingLg),
             AppTextField(
               controller: _passwordController,
-              label: 'Password',
+              label: l10n.password,
               obscureText: _obscurePassword,
               textInputAction: TextInputAction.done,
               autofillHints: const [AutofillHints.password],
@@ -125,16 +128,16 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Password is required';
+                  return l10n.passwordRequired;
                 }
-                if (value.length < 8) return 'Use at least 8 characters';
+                if (value.length < 8) return l10n.minimumPassword;
                 return null;
               },
               onFieldSubmitted: (_) => _login(),
             ),
             const VerticalSpacing(AppDimensions.spacingXl),
             AppPrimaryButton(
-              label: 'Sign in',
+              label: l10n.signIn,
               onPressed: _login,
               isLoading: isLoading,
               expanded: true,
@@ -145,7 +148,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       footer: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Text('New to PhysioGhar?'),
+          Text(l10n.noAccount),
           AppTextButton(
             label: 'Create account',
             onPressed: isLoading

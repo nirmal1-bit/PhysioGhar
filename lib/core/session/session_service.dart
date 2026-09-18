@@ -14,6 +14,12 @@ class SessionService {
 
   String get themeMode => _prefs.getString(StorageKeys.themeMode) ?? 'light';
 
+  String get locale => _prefs.getString(StorageKeys.locale) ?? 'en';
+
+  Future<void> saveLocale(String value) async {
+    await _prefs.setString(StorageKeys.locale, value);
+  }
+
   Future<void> saveThemeMode(String value) async {
     await _prefs.setString(StorageKeys.themeMode, value);
   }
