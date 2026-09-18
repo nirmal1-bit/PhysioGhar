@@ -16,6 +16,11 @@ The app can also be opened as a regular Flutter project for UI development,
 but login, profiles, schedules, bookings, notes, and complaints require a
 running backend which for now it has as it uses https://prod.creativeinkflow.tech/api/v1 which is hosted backend url.
 
+## Build apk file
+The build apk file is in google drive you can access it through this link
+
+Google drive: https://drive.google.com/drive/folders/134KksElsrOFAJw0x0XIpbAtBZQLHX3Vf?usp=drive_linkk
+
 ## Run locally
 
 Install Flutter dependencies:
