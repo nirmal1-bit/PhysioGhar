@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:physioghar/core/common/widgets/app_bar.dart';
+import 'package:physioghar/core/common/widgets/language_switcher.dart';
 import 'package:physioghar/core/common/widgets/app_spacing.dart';
 import 'package:physioghar/core/theme/app_dimensions.dart';
 import 'package:physioghar/core/theme/app_text_styles.dart';
@@ -25,30 +26,48 @@ class AuthPageLayout extends StatelessWidget {
     return Scaffold(
       appBar: const EmptyAppBar(),
       body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppDimensions.pagePadding,
-              vertical: AppDimensions.spacingXxl,
+        child: Column(
+          children: [
+            const Padding(
+              padding: EdgeInsets.fromLTRB(
+                AppDimensions.pagePadding,
+                AppDimensions.spacingSm,
+                AppDimensions.pagePadding,
+                0,
+              ),
+              child: LanguageSwitcher(),
             ),
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 440),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(eyebrow.toUpperCase(), style: AppTextStyles.eyebrow),
-                  const VerticalSpacing(AppDimensions.spacingMd),
-                  Text(title, style: AppTextStyles.headingMedium),
-                  const VerticalSpacing(AppDimensions.spacingSm),
-                  Text(subtitle, style: AppTextStyles.body),
-                  const VerticalSpacing(AppDimensions.spacingXl),
-                  form,
-                  const VerticalSpacing(AppDimensions.spacingXl),
-                  Center(child: footer),
-                ],
+            Expanded(
+              child: Center(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppDimensions.pagePadding,
+                    vertical: AppDimensions.spacingXxl,
+                  ),
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 440),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          eyebrow.toUpperCase(),
+                          style: AppTextStyles.eyebrow,
+                        ),
+                        const VerticalSpacing(AppDimensions.spacingMd),
+                        Text(title, style: AppTextStyles.headingMedium),
+                        const VerticalSpacing(AppDimensions.spacingSm),
+                        Text(subtitle, style: AppTextStyles.body),
+                        const VerticalSpacing(AppDimensions.spacingXl),
+                        form,
+                        const VerticalSpacing(AppDimensions.spacingXl),
+                        Center(child: footer),
+                      ],
+                    ),
+                  ),
+                ),
               ),
             ),
-          ),
+          ],
         ),
       ),
     );
