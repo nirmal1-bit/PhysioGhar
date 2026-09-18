@@ -43,6 +43,7 @@ class ScheduleData {
 class ScheduleController extends AsyncNotifier<ScheduleData> {
   @override
   Future<ScheduleData> build() async {
+    ref.watch(sessionRevisionProvider);
     final selectedDate = _dateOnly(DateTime.now());
     return _load(selectedDate);
   }

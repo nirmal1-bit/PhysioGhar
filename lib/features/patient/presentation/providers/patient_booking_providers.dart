@@ -23,7 +23,10 @@ class PatientBookingController extends AsyncNotifier<List<AvailableTherapist>> {
   DateTime selectedDate = DateTime.now();
 
   @override
-  Future<List<AvailableTherapist>> build() => _load(selectedDate);
+  Future<List<AvailableTherapist>> build() {
+    ref.watch(sessionRevisionProvider);
+    return _load(selectedDate);
+  }
 
   Future<void> selectDate(DateTime date) async {
     selectedDate = date;

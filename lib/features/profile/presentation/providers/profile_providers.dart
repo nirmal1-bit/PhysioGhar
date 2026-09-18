@@ -19,6 +19,7 @@ final profileControllerProvider =
 class ProfileController extends AsyncNotifier<Profile?> {
   @override
   Future<Profile?> build() async {
+    ref.watch(sessionRevisionProvider);
     final result = await ref.read(profileRepositoryProvider).getProfile();
 
     return result.fold((error) {

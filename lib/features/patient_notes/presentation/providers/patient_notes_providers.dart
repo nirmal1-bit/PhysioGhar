@@ -18,19 +18,21 @@ final patientNotesProvider =
     );
 
 final patientNotesDetailsProvider = FutureProvider.autoDispose
-    .family<Patient, int>(
-      (ref, patientId) => ref
+    .family<Patient, int>((ref, patientId) {
+      ref.watch(sessionRevisionProvider);
+      return ref
           .read(patientNotesRepositoryProvider)
           .getPatient(patientId)
           .then(
             (result) =>
                 result.fold((error) => throw error, (patient) => patient),
-          ),
-    );
+          );
+    });
 
 class PatientNotesController extends AsyncNotifier<List<Patient>> {
   @override
   Future<List<Patient>> build() async {
+    ref.watch(sessionRevisionProvider);
     final result = await ref.read(patientNotesRepositoryProvider).getPatients();
     return result.fold((error) => throw error, (patients) => patients);
   }

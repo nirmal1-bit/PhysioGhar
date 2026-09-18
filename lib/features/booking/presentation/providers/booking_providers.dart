@@ -21,6 +21,7 @@ final bookingControllerProvider =
 class BookingController extends AsyncNotifier<List<Booking>> {
   @override
   Future<List<Booking>> build() async {
+    ref.watch(sessionRevisionProvider);
     final result = await ref.read(bookingRepositoryProvider).getBookings();
     return result.fold((error) => throw error, (bookings) => bookings);
   }

@@ -20,6 +20,7 @@ final complaintControllerProvider =
 class ComplaintController extends AsyncNotifier<List<Complaint>> {
   @override
   Future<List<Complaint>> build() async {
+    ref.watch(sessionRevisionProvider);
     final result = await ref.read(complaintRepositoryProvider).getComplaints();
     return result.fold((error) => throw error, (complaints) => complaints);
   }

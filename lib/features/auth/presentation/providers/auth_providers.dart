@@ -36,6 +36,7 @@ class AuthController extends AsyncNotifier<AuthToken?> {
       (token) async {
         await session.saveToken(token.accessToken);
         await session.saveUserRole(token.userType);
+        ref.read(sessionRevisionProvider.notifier).state++;
         state = AsyncData(token);
         return null;
       },
@@ -64,6 +65,7 @@ class AuthController extends AsyncNotifier<AuthToken?> {
     state = const AsyncData(null);
     final session = await ref.read(sessionServiceProvider.future);
     await session.removeToken();
+    ref.read(sessionRevisionProvider.notifier).state++;
   }
 
   static String errorMessage(AppError error) {

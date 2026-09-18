@@ -8,6 +8,13 @@ import 'package:physioghar/core/session/session_service.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+/// changes whenever the authenticated account changes.
+///
+/// user-scoped providers watch this value so a logout or a new login cannot
+/// reuse the previous account's in-memory API state.
+
+final sessionRevisionProvider = StateProvider<int>((ref) => 0);
+
 final dioProvider = Provider<Dio>((ref) {
   final dio = Dio(
     BaseOptions(

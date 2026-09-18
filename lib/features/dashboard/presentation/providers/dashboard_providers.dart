@@ -29,6 +29,7 @@ class DashboardData {
 class DashboardController extends AsyncNotifier<DashboardData> {
   @override
   Future<DashboardData> build() async {
+    ref.watch(sessionRevisionProvider);
     final repository = ref.read(dashboardRepositoryProvider);
     final bookingsResult = await ref
         .read(bookingRepositoryProvider)
